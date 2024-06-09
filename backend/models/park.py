@@ -3,7 +3,7 @@ from models.base_model import BaseModel
 
 
 class Park(BaseModel):
-    def __init__(self, name, state, city, area, address, company_id) -> None:
+    def __init__(self, name: str, state: str, city: str, area: str, address: str, company_id: str) -> None:
         super().__init__(name)
         self.state = state
         self.city = city
