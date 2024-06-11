@@ -1,11 +1,9 @@
 from models.base_model import BaseModel, Base
-from sqlalchemy import Integer, String, Column, DateTime
-
-
+from sqlalchemy import String, Column
 
 
 class Company(BaseModel, Base):
-    
+
     __tablename__ = "companies"
 
     email = Column('email', String(100), unique=True)
@@ -13,11 +11,19 @@ class Company(BaseModel, Base):
     description = Column('description', String(200))
     pic_url = Column('pic_url', String(200))
 
-    def __init__(self, name: str, company_email: str, tagline: str, description: str, display_pic_url: str) -> None:
+    def __init__(self, name: str, email: str, tagline: str, description: str, display_pic_url: str) -> None:
         """initialize Company model"""
         super().__init__(name)
-        self.email = company_email
+        self.email = email
         self.tagline = tagline
         self.description = description
         self.pic_url = display_pic_url
 
+    def to_dict(self):
+        ds = {}
+        print(self.__dict__)
+        # for i, v in self.__dict__:
+        #     if i not in ['created', 'updated']:
+        #         ds[i] = v
+        
+        return ds

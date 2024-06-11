@@ -9,10 +9,10 @@ model inherit from
 """
 class Base(DeclarativeBase):
     ...
-db = SQLAlchemy(model_class=Base)
+# db = SQLAlchemy(model_class=Base)
 
 class BaseModel:
-    id = Column('id', Integer, primary_key=True)
+    id = Column('id', String(100), primary_key=True)
     name = Column('name', String(100), nullable=False)
     created = Column('created', DateTime)
     updated = Column('updated', DateTime)

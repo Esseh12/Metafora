@@ -2,23 +2,53 @@ from models.company import Company
 from models.park import Park
 from models.user import User
 from models.route import Route
+from models.base_model import Base
+from flask import Flask, jsonify, request, redirect
+from flask_sqlalchemy import SQLAlchemy
 
-comp = Company("Guo", "guo@gm.com", "we move", "many many things", "www.img.com/dfghj")
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite"
+
+db = SQLAlchemy(app, model_class=Base)
 
 
-park1 = Park('penciema park', 'lagos', 'Agege', 'pencinema', '10 old abeokuta rd,pencinema agage, lagos', comp.id)
-park2 = Park('baju park', 'Kano', 'fagge', 'bajulaiye', '1780 old rd,Kano', comp.id)
 
-user1 = User('imole', 'imo@d.dev', '32.com/ims')
-route1 = Route('Lagos to Uyo', park1.id, park2.id, 8700, 'night', comp.id)
+with app.app_context():
+    db.create_all()
 
 
-print(route1.__dict__)
+@app.route("/")
+def index():
+    # __init__(self, name: str, email: str, tagline: str, description: str, display_pic_url: str) -> None:
+    dt = db.session.query(Company).all()
+    # print(dt)
+    if dt:
+        lis = [obj.to_dict() for obj in dt]
+        # print(lis)
 
-# print(user1.__dict__)
-# user1.role = 'admin'
-# print(user1.__dict__)
-# print(park1.__dict__)
-# print(comp)
-# print(park1)
+        return jsonify({'msg': "lis"})
+    return jsonify({'msg': "wellcome"})
 
+@app.route('/add-company', methods=['POST'], strict_slashes=False)
+def add_company():
+    data = request.json
+    name = data['name']
+    email = data['email']
+    tagline = data['tagline']
+    description = data['description']
+    pic_url = data['pic_url']
+
+    
+    comp = Company(name, email, tagline, description, display_pic_url=pic_url)
+
+    db.session.add(comp)
+    db.session.commit()
+
+    print(data)
+    return jsonify({"msg": "Company created"})
+    ...
+
+
+if __name__ == "__main__":
+    # db.create_all()
+    app.run("0.0.0.0", 5000)
