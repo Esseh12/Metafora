@@ -4,9 +4,6 @@ from uuid import uuid4
 
 
 
-
-
-
 app = Flask(__name__)
 
 

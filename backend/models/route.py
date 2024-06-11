@@ -1,8 +1,8 @@
-from models.base_model import BaseModel
+from models.base_model import Base, BaseModel
 
 
 
-class Route(BaseModel):
+class Route(BaseModel, Base):
     def __init__(self, name: str, from_park_id: str, to_park_id: str, price: int, time: str, company_id: str) -> None:
         super().__init__(name)
         self.from_park_id = from_park_id

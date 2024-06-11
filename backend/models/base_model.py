@@ -1,12 +1,22 @@
 from uuid import uuid4
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import Integer, String, Column, DateTime
 """
 This modulue contain the BaseModel class that every other
 model inherit from
 """
-
+class Base(DeclarativeBase):
+    ...
+db = SQLAlchemy(model_class=Base)
 
 class BaseModel:
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String(100), nullable=False)
+    created = Column('created', DateTime)
+    updated = Column('updated', DateTime)
+    
     def __init__(self, name: str) -> None:
         self.id = str(uuid4())
         self.name = name
