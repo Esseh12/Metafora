@@ -18,12 +18,3 @@ class Company(BaseModel, Base):
         self.tagline = tagline
         self.description = description
         self.pic_url = display_pic_url
-
-    def to_dict(self):
-        ds = {}
-        print(self.__dict__)
-        # for i, v in self.__dict__:
-        #     if i not in ['created', 'updated']:
-        #         ds[i] = v
-        
-        return ds

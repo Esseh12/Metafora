@@ -18,4 +18,4 @@ class Park(BaseModel,Base):
         self.city = city
         self.area = area
         self.address = address
-        self.company = company_id
+        self.company_id = company_id

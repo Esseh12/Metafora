@@ -25,3 +25,10 @@ class BaseModel:
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.id}"
+    
+    def to_dict(self):
+        """return json serializable format for the class object"""
+        ds = {k:v for k,v in self.__dict__.items() if not k.startswith('_')}
+        ds['created'] = str(ds['created'])
+        ds['updated'] = str(ds['updated'])
+        return ds
