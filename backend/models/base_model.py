@@ -20,15 +20,21 @@ class BaseModel:
     def __init__(self, name: str) -> None:
         self.id = str(uuid4())
         self.name = name
-        self.created: datetime = datetime.now()
-        self.updated: datetime = self.created
+        self.created = datetime.now()
+        self.updated = self.created
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}.{self.id}"
     
     def to_dict(self):
         """return json serializable format for the class object"""
-        ds = {k:v for k,v in self.__dict__.items() if not k.startswith('_')}
-        ds['created'] = str(ds['created'])
-        ds['updated'] = str(ds['updated'])
-        return ds
+        new_dict = self.__dict__.copy()
+        if "created" in new_dict:
+            new_dict['created'] = new_dict['created'].strftime("%Y-%m-%dT%H:%M:%S.%f")
+
+        if "updated" in new_dict:
+            new_dict['updated'] = new_dict['updated'].strftime("%Y-%m-%dT%H:%M:%S.%f")
+        
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
+        return new_dict

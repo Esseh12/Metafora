@@ -1,5 +1,6 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column
+from sqlalchemy.orm import relationship
 
 
 class Company(BaseModel, Base):
@@ -10,6 +11,8 @@ class Company(BaseModel, Base):
     tagline = Column('tagline', String(200))
     description = Column('description', String(200))
     pic_url = Column('pic_url', String(200))
+    parks = relationship('Park', backref='company')
+    routes = relationship('Route', backref='company')
 
     def __init__(self, name: str, email: str, tagline: str, description: str, display_pic_url: str) -> None:
         """initialize Company model"""
