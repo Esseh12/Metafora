@@ -93,25 +93,6 @@ def add_park():
     return jsonify({"msg": "Park created"}), 201
 
 
-
-# #### to be visited
-@app.post('/add-route', strict_slashes=False)
-def add_park():
-    data = request.json
-    name = data.get('name', 'no name')
-    state = data.get('state', 'no state')
-    city = data.get('city', 'no city')
-    area = data.get('area', 'no area')
-    address = data.get('address', 'no address')
-    company_id = data.get('company_id', 'no company_id')
-
-    park = Park(name, state, city, area, address,company_id)
-    db.session.add(park)
-    db.session.commit()
-    return jsonify({"msg": "Park created"}), 201
-# #########
-
-
 @app.route('/parks/<park_id>', methods=['GET'], strict_slashes=False)
 def get_park(park_id):
     obj = db.session.query(Park).get(escape(park_id))
@@ -124,6 +105,30 @@ def get_park(park_id):
 
         return jsonify({"data": data})
     return jsonify({"msg": 'not found'}), 404
+
+
+@app.post('/add-route', strict_slashes=False)
+def add_route():
+    data = request.json
+
+    name = data.get('name')
+    from_park_id = data.get('from_park_id')
+    to_park_id = data.get('to_park_id')
+    price = data.get('price')
+    time = data.get('time')
+    company_id = data.get('company_id')
+
+    if not from_park_id or not to_park_id or not time or not company_id:
+        return jsonify({"msg": "missing data [name, from_park_id, to_park_id, time or company_id]"}), 400
+    
+    if time not in ["morning", "noon", "night"]:
+        return jsonify({"msg": "time must be morning || noon || night"}), 400
+        
+    route = Route(name, from_park_id, to_park_id, price, time, company_id)
+    db.session.add(route)
+    db.session.commit()
+    return jsonify({"msg": "Route created"}), 201
+
 
 if __name__ == "__main__":
     app.run("0.0.0.0", 5000)

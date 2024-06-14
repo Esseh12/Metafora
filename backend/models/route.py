@@ -1,5 +1,6 @@
 from models.base_model import Base, BaseModel
 from sqlalchemy import Integer, String, Column, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Route(BaseModel, Base):
@@ -11,6 +12,9 @@ class Route(BaseModel, Base):
     price = Column('price', Integer)
     time = Column('time', String(50))
     company_id = Column('company_id', ForeignKey('companies.id'))
+
+    from_park = relationship('Park', foreign_keys=[from_park_id], backref='routes_from')
+    to_park = relationship('Park', foreign_keys=[to_park_id], backref='to_routes')
     
     def __init__(self, name: str, from_park_id: str, to_park_id: str, price: int, time: str, company_id: str) -> None:
         super().__init__(name)

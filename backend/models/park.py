@@ -12,7 +12,7 @@ class Park(BaseModel,Base):
     area = Column('area', String(100))
     address = Column('address', String(200))
     company_id = Column('company_id', ForeignKey('companies.id'))
-    routes = relationship('Route', backref='park')
+    # routes = relationship('Route', backref='park')
 
     def __init__(self, name: str, state: str, city: str, area: str, address: str, company_id: str) -> None:
         super().__init__(name)
