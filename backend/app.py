@@ -117,6 +117,13 @@ def add_route():
     price = data.get('price')
     time = data.get('time')
     company_id = data.get('company_id')
+    from_state = data.get('from_state')
+    from_city = data.get('from_city')
+    from_area = data.get('from_area')
+    to_state = data.get('to_state')
+    to_city = data.get('to_city')
+    to_area = data.get('to_area')
+    
 
     if not from_park_id or not to_park_id or not time or not company_id:
         return jsonify({"msg": "missing data [name, from_park_id, to_park_id, time or company_id]"}), 400
@@ -124,10 +131,47 @@ def add_route():
     if time not in ["morning", "noon", "night"]:
         return jsonify({"msg": "time must be morning || noon || night"}), 400
         
-    route = Route(name, from_park_id, to_park_id, price, time, company_id)
+    route = Route(name, from_park_id, to_park_id, price, time, company_id, from_state, from_city, from_area, to_state, to_city, to_area)
     db.session.add(route)
     db.session.commit()
     return jsonify({"msg": "Route created"}), 201
+
+@app.get("/route/<route_id>")
+def get_route(route_id):
+    route = db.session.get(Route, escape(route_id))
+    if route:
+        response = route.to_dict()
+        return jsonify({"data": response})
+    else:
+        return jsonify({"msg": "Route Not Found"}), 404
+
+
+@app.get("/routes_search")
+def get_routes_based_on_query():
+    data = request.json
+
+    from_state = data['from_state']
+    to_state = data['to_state']
+
+    # results = db.session.query(Route).join(Route.from_park).join(Route.to_park).filter(
+    #     Route.from_park.has(Park.state == from_state),
+    #     Route.to_park.has(Park.state == to_state)
+    # ).all()
+
+    results = db.session.query(Route).filter(
+        Route.from_state == from_state,
+        Route.to_state == to_state
+    ).all()
+    if results:
+        data = [i.to_dict() for i in results]
+        return jsonify({"data": data})
+    return {"msg": "No route for your current location at the moment"}
+    #  route:
+    #     response = route.to_dict()
+    #     return jsonify({"data": response})
+    # else:
+    #     return jsonify({"msg": "Route Not Found"}), 404
+
 
 
 if __name__ == "__main__":
