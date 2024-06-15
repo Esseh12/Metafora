@@ -210,28 +210,5 @@ def get_journeys_based_on_query():
     return jsonify({"data": all_journs})
 
 
-
-    # return jsonify({"data": results})
-    # results = db.session.query(Journey).join(Journey.from_park).join(Journey.to_park).filter(
-    #     Journey.from_park.has(Park.state == from_state),
-    #     Journey.to_park.has(Park.state == to_state)
-    # ).all()
-
-    # results = db.session.query(Journey).filter(
-    #     Journey.from_state == from_state,
-    #     Journey.to_state == to_state
-    # ).all()
-    # if results:
-    #     data = [i.to_dict() for i in results]
-    #     return jsonify({"data": data})
-    # return {"msg": "No journey for your current location at the moment"}
-    #  journey:
-    #     response = journey.to_dict()
-    #     return jsonify({"data": response})
-    # else:
-    #     return jsonify({"msg": "Journey Not Found"}), 404
-
-
-
 if __name__ == "__main__":
     app.run("0.0.0.0", 5000)
