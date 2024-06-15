@@ -7,6 +7,7 @@ from flask import Flask, jsonify, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import or_, and_
 
 
 app = Flask(__name__)
@@ -165,16 +166,30 @@ def get_journey(journey_id):
 def get_journeys_based_on_query():
     data = request.json
 
-    from_state = data.get('from_state').lower()
-    to_state = data.get('to_state').lower()
+    from_state = data.get('from_state')
+    from_lga = data.get('from_lga', 'nothing')
+    from_town = data.get('from_town', 'nothing')
+    to_state = data.get('to_state')
 
     if not from_state or not to_state:
         return jsonify({"error": "Missing data [from_state, to_state]"}), 400
     
 
     journeys = db.session.query(Journey).join(Park, Journey.from_park_id == Park.id).filter(
-        Journey.from_park.has(Park.state == from_state),
-        Journey.to_park.has(Park.state == to_state)
+        or_(
+            and_(
+                Journey.from_park.has(Park.town == from_town.lower()),
+                Journey.to_park.has(Park.state == to_state.lower())
+            ),
+            and_(
+                Journey.from_park.has(Park.lga == from_lga.lower()),
+                Journey.to_park.has(Park.state == to_state.lower())
+            ),
+            and_(
+                Journey.from_park.has(Park.state == from_state.lower()),
+                Journey.to_park.has(Park.state == to_state.lower())
+            )
+        )
     ).all()
     if not journeys:
         return {"msg": "No journey for your current location at the moment"}
@@ -186,11 +201,17 @@ def get_journeys_based_on_query():
         park_obj = {
             'from': {
                 'park_id': journey.from_park_id,
-                'address': journey.from_park.address
+                'address': journey.from_park.address,
+                'name': journey.from_park.name,
+                'lga': journey.from_park.lga,
+                'town': journey.from_park.town
             },
             'to': {
                 'park_id': journey.to_park_id,
-                'address': journey.to_park.address
+                'address': journey.to_park.address,
+                'name': journey.to_park.name,
+                'lga': journey.to_park.lga,
+                'town': journey.to_park.town
             }
         }
 
