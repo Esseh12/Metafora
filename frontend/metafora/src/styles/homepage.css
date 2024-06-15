@@ -1,0 +1,95 @@
+/* root variables*/
+:root{
+    --blue: rgb(51, 51, 255);
+    --hoverBlue: rgb(41, 41, 204);
+}
+/* reset default margin and padding*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Body styles*/
+body{
+    font-family:Arial, Helvetica, sans-serif;
+}
+/* Navbar container styles*/
+
+.navbar-section {
+    padding: 10px 10px 15px 20px;
+    position: fixed;
+    width: 100%;
+    height: 85px;
+    background-color: #fff;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+/* Logo container styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 50px 0px 0px;
+}
+.navbar-logo{
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+    padding-bottom: 10px;
+}
+.logo-text{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.navbar-text{
+    flex-grow: 1;
+}
+.navbar-list{
+    display: flex;
+    list-style-type: none;
+    justify-content: flex-end;
+    font-weight: 600;
+}
+.navbar-item{
+    margin-right: 20px;
+    cursor: pointer;
+    padding-top: 27px;
+}
+.navbar-item:hover {
+    border-bottom: 2px solid var(--hoverBlue);
+    color: var(--blue);
+}
+.navbar-button {
+    background-color: var(--hoverBlue);
+    margin-top: 20px;
+    font-weight: 600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 5px 5px #ccc;
+}
+
+.navbar-button:hover {
+    background-color: #fff;
+    color: var(--blue);
+    border: 1px solid var(--blue)
+}
+
+/* background imaage*/
+.heroe-image{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../images/backgroundImg.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+.heroe-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+}
