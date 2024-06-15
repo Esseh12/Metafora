@@ -12,7 +12,6 @@ class Journey(BaseModel, Base):
     price = Column('price', Integer, default=0)
     time = Column('time', String(50), nullable=False)
     company_id = Column('company_id', ForeignKey('companies.id'), nullable=False)
-    
     # from_state = Column('from_state', String(100))
     # from_lga = Column('from_lga', String(100))
     # from_town = Column('from_town', String(100))

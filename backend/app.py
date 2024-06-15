@@ -6,10 +6,11 @@ from models.base_model import Base
 from flask import Flask, jsonify, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
+from sqlalchemy.exc import IntegrityError
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db2.sqlite"
 
 db = SQLAlchemy(app, model_class=Base)
 
@@ -23,7 +24,7 @@ def not_found(error):
     return jsonify({"error": str(error)}), 404
 
 
-@app.journey("/")
+@app.route("/")
 def index():
     companies = db.session.query(Company).all()
     parks = db.session.query(Park).all()
@@ -31,7 +32,7 @@ def index():
 
     all_ccomp = [obj.to_dict() for obj in companies]
     all_parks = [obj.to_dict() for obj in parks]
-    all_journeys = [obj.to_dict() for obj in all_journeys]
+    all_journeys = [obj.to_dict() for obj in journeys]
     res = {
         'companies': all_ccomp,
         'parks': all_parks,
@@ -67,18 +68,25 @@ def get_company(id):
 @app.post('/companies', strict_slashes=False)
 def add_company():
     data = request.json
+
     name = data.get('name')
     email = data.get('email')
     tagline = data.get('tagline', 'no tagline')
     description = data.get('description', 'no discription')
-    pic_url = data.get('pic_url','nopic')
-    
-    comp = Company(name, email, tagline, description, display_pic_url=pic_url)
-    db.session.add(comp)
-    db.session.commit()
+    pic_url = data.get('pic_url','no pic')
 
-    new_comp = db.session.query(Company).get(comp.id).to_dict()   
-    return jsonify(new_comp), 201
+    if not name or not email:
+        return jsonify({"error": "Missing data [name || email]"}), 400
+    
+    try:
+        comp = Company(name, email, tagline, description, display_pic_url=pic_url)
+        db.session.add(comp)
+        db.session.commit()
+    except IntegrityError:
+        return jsonify({"error": "email exists"}), 400
+
+    new_comp = db.session.get(Company, comp.id).to_dict() 
+    return jsonify({"data": new_comp}), 201
 
 @app.post('/add-park', strict_slashes=False)
 def add_park():
@@ -98,12 +106,14 @@ def add_park():
 
     db.session.add(park)
     db.session.commit()
-    return jsonify({"msg": "Park created"}), 201
+
+    new_park = db.session.get(Park, park.id).to_dict() 
+    return jsonify({"data": new_park}), 201
 
 
 @app.get('/parks/<park_id>', strict_slashes=False)
 def get_park(park_id):
-    obj = db.session.query(Park).get(escape(park_id))
+    obj = db.session.get(Park, escape(park_id))
     if obj:
         new_obj  = obj.to_dict()
         new_obj.update({"company" : obj.company.to_dict()})
@@ -137,7 +147,9 @@ def add_journey():
 
     db.session.add(journey)
     db.session.commit()
-    return jsonify({"msg": "Journey created"}), 201
+
+    new_journey = db.session.get(Journey, journey.id).to_dict()
+    return jsonify({"data": new_journey}), 201
 
 @app.get("/journey/<journey_id>")
 def get_journey(journey_id):
@@ -153,22 +165,66 @@ def get_journey(journey_id):
 def get_journeys_based_on_query():
     data = request.json
 
-    from_state = data['from_state']
-    to_state = data['to_state']
+    from_state = data.get('from_state').lower()
+    to_state = data.get('to_state').lower()
 
+    if not from_state or not to_state:
+        return jsonify({"error": "Missing data [from_state, to_state]"}), 400
+    
+
+    journeys = db.session.query(Journey).join(Park, Journey.from_park_id == Park.id).filter(
+        Journey.from_park.has(Park.state == from_state),
+        Journey.to_park.has(Park.state == to_state)
+    ).all()
+    if not journeys:
+        return {"msg": "No journey for your current location at the moment"}
+
+    all_journs = []
+
+    for journey in journeys:
+        journ_dict = journey.to_dict()
+        park_obj = {
+            'from': {
+                'park_id': journey.from_park_id,
+                'address': journey.from_park.address
+            },
+            'to': {
+                'park_id': journey.to_park_id,
+                'address': journey.to_park.address
+            }
+        }
+
+        journ_dict['parks_info'] = park_obj
+        del journ_dict['from_park_id']
+        del journ_dict['to_park_id']
+
+        comp_obj = {
+            'name': journey.company.name,
+            'id': journey.company_id
+        }
+        journ_dict['company_info'] = comp_obj
+        del journ_dict['company_id']
+
+        all_journs.append(journ_dict)
+        
+    return jsonify({"data": all_journs})
+
+
+
+    # return jsonify({"data": results})
     # results = db.session.query(Journey).join(Journey.from_park).join(Journey.to_park).filter(
     #     Journey.from_park.has(Park.state == from_state),
     #     Journey.to_park.has(Park.state == to_state)
     # ).all()
 
-    results = db.session.query(Journey).filter(
-        Journey.from_state == from_state,
-        Journey.to_state == to_state
-    ).all()
-    if results:
-        data = [i.to_dict() for i in results]
-        return jsonify({"data": data})
-    return {"msg": "No journey for your current location at the moment"}
+    # results = db.session.query(Journey).filter(
+    #     Journey.from_state == from_state,
+    #     Journey.to_state == to_state
+    # ).all()
+    # if results:
+    #     data = [i.to_dict() for i in results]
+    #     return jsonify({"data": data})
+    # return {"msg": "No journey for your current location at the moment"}
     #  journey:
     #     response = journey.to_dict()
     #     return jsonify({"data": response})
