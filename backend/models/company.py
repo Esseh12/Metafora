@@ -12,9 +12,9 @@ class Company(BaseModel, Base):
     description = Column('description', String(200))
     pic_url = Column('pic_url', String(200))
     parks = relationship('Park', backref='company')
-    routes = relationship('Route', backref='company')
+    journeys = relationship('Journey', backref='company')
 
-    def __init__(self, name: str, email: str, tagline: str, description: str, display_pic_url: str) -> None:
+    def __init__(self, name, email, tagline, description, display_pic_url):
         """initialize Company model"""
         super().__init__(name)
         self.email = email

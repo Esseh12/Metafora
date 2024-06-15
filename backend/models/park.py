@@ -7,14 +7,14 @@ class Park(BaseModel,Base):
 
     __tablename__ = "parks"
 
-    state = Column('state', String(100))
-    lga = Column('lga', String(100))
-    town = Column('town', String(100))
-    address = Column('address', String(200))
-    company_id = Column('company_id', ForeignKey('companies.id'))
+    state = Column('state', String(50), nullable=False)
+    lga = Column('lga', String(50), nullable=False)
+    town = Column('town', String(50))
+    address = Column('address', String, nullable=False)
+    company_id = Column('company_id', String(100), ForeignKey('companies.id'))
     # routes = relationship('Route', backref='park')
 
-    def __init__(self, name: str, state: str, lga: str, town: str, address: str, company_id: str) -> None:
+    def __init__(self, name, state, lga, town, address, company_id):
         super().__init__(name)
         self.state = state
         self.lga = lga

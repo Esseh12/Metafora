@@ -1,7 +1,7 @@
 from models.company import Company
 from models.park import Park
 from models.user import User
-from models.route import Route
+from models.journey import Journey
 from models.base_model import Base
 from flask import Flask, jsonify, request, redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -23,16 +23,19 @@ def not_found(error):
     return jsonify({"error": str(error)}), 404
 
 
-@app.route("/")
+@app.journey("/")
 def index():
-    comps = db.session.query(Company).all()
+    companies = db.session.query(Company).all()
     parks = db.session.query(Park).all()
+    journeys = db.session.query(Journey).all()
 
-    all_ccomp = [obj.to_dict() for obj in comps]
+    all_ccomp = [obj.to_dict() for obj in companies]
     all_parks = [obj.to_dict() for obj in parks]
+    all_journeys = [obj.to_dict() for obj in all_journeys]
     res = {
         'companies': all_ccomp,
-        'parks': all_parks
+        'parks': all_parks,
+        'journeys': all_journeys
     }
     return jsonify({'data': res})
 
@@ -80,20 +83,25 @@ def add_company():
 @app.post('/add-park', strict_slashes=False)
 def add_park():
     data = request.json
-    name = data.get('name', 'no name')
-    state = data.get('state', 'no state')
-    city = data.get('city', 'no city')
-    area = data.get('area', 'no area')
-    address = data.get('address', 'no address')
-    company_id = data.get('company_id', 'no company_id')
 
-    park = Park(name, state, city, area, address,company_id)
+    name = data.get('name')
+    state = data.get('state')
+    lga = data.get('lga')
+    town = data.get('town', None)
+    address = data.get('address')
+    company_id = data.get('company_id', None)
+
+    if not name or not state or not lga or not address:
+        return jsonify({"error": "Missing data [name, state, lga, address]"}), 400
+
+    park = Park(name, state, lga, town, address, company_id)
+
     db.session.add(park)
     db.session.commit()
     return jsonify({"msg": "Park created"}), 201
 
 
-@app.route('/parks/<park_id>', methods=['GET'], strict_slashes=False)
+@app.get('/parks/<park_id>', strict_slashes=False)
 def get_park(park_id):
     obj = db.session.query(Park).get(escape(park_id))
     if obj:
@@ -104,73 +112,68 @@ def get_park(park_id):
         }
 
         return jsonify({"data": data})
-    return jsonify({"msg": 'not found'}), 404
+    return jsonify({"error": 'Not found'}), 404
 
 
-@app.post('/add-route', strict_slashes=False)
-def add_route():
+@app.post('/add-journey', strict_slashes=False)
+def add_journey():
     data = request.json
 
     name = data.get('name')
     from_park_id = data.get('from_park_id')
     to_park_id = data.get('to_park_id')
-    price = data.get('price')
+    price = data.get('price', 0)
     time = data.get('time')
     company_id = data.get('company_id')
-    from_state = data.get('from_state')
-    from_city = data.get('from_city')
-    from_area = data.get('from_area')
-    to_state = data.get('to_state')
-    to_city = data.get('to_city')
-    to_area = data.get('to_area')
-    
 
-    if not from_park_id or not to_park_id or not time or not company_id:
-        return jsonify({"msg": "missing data [name, from_park_id, to_park_id, time or company_id]"}), 400
-    
+
+    if not name or not from_park_id or not to_park_id or not time or not company_id:
+        return jsonify({"msg": "missing data [name, from_park_id, to_park_id, time, company_id]"}), 400
+
     if time not in ["morning", "noon", "night"]:
         return jsonify({"msg": "time must be morning || noon || night"}), 400
-        
-    route = Route(name, from_park_id, to_park_id, price, time, company_id, from_state, from_city, from_area, to_state, to_city, to_area)
-    db.session.add(route)
-    db.session.commit()
-    return jsonify({"msg": "Route created"}), 201
 
-@app.get("/route/<route_id>")
-def get_route(route_id):
-    route = db.session.get(Route, escape(route_id))
-    if route:
-        response = route.to_dict()
+    journey = Journey(name, from_park_id, to_park_id, price, time, company_id)
+
+    db.session.add(journey)
+    db.session.commit()
+    return jsonify({"msg": "Journey created"}), 201
+
+@app.get("/journey/<journey_id>")
+def get_journey(journey_id):
+    journey = db.session.get(Journey, escape(journey_id))
+    if journey:
+        response = journey.to_dict()
         return jsonify({"data": response})
     else:
-        return jsonify({"msg": "Route Not Found"}), 404
+        return jsonify({"msg": "Journey Not Found"}), 404
 
 
-@app.get("/routes_search")
-def get_routes_based_on_query():
+@app.get("/journeys_search")
+def get_journeys_based_on_query():
     data = request.json
 
     from_state = data['from_state']
     to_state = data['to_state']
 
-    # results = db.session.query(Route).join(Route.from_park).join(Route.to_park).filter(
-    #     Route.from_park.has(Park.state == from_state),
-    #     Route.to_park.has(Park.state == to_state)
+    # results = db.session.query(Journey).join(Journey.from_park).join(Journey.to_park).filter(
+    #     Journey.from_park.has(Park.state == from_state),
+    #     Journey.to_park.has(Park.state == to_state)
     # ).all()
 
-    results = db.session.query(Route).filter(
-        Route.from_state == from_state,
-        Route.to_state == to_state
+    results = db.session.query(Journey).filter(
+        Journey.from_state == from_state,
+        Journey.to_state == to_state
     ).all()
     if results:
         data = [i.to_dict() for i in results]
         return jsonify({"data": data})
-    return {"msg": "No route for your current location at the moment"}
-    #  route:
-    #     response = route.to_dict()
+    return {"msg": "No journey for your current location at the moment"}
+    #  journey:
+    #     response = journey.to_dict()
     #     return jsonify({"data": response})
     # else:
-    #     return jsonify({"msg": "Route Not Found"}), 404
+    #     return jsonify({"msg": "Journey Not Found"}), 404
 
 
 
