@@ -20,22 +20,30 @@ with app.app_context():
     db.create_all()
 
 
+
+
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({"error": str(error)}), 404
+    """This Handles any 404 error"""
+    return jsonify({"error": str(error.name)}), 404
+
+
 
 
 @app.route("/")
 def index():
+    """
+    This returns all companies, parks and journeys
+    """
     companies = db.session.query(Company).all()
     parks = db.session.query(Park).all()
     journeys = db.session.query(Journey).all()
 
-    all_ccomp = [obj.to_dict() for obj in companies]
+    all_comps = [obj.to_dict() for obj in companies]
     all_parks = [obj.to_dict() for obj in parks]
     all_journeys = [obj.to_dict() for obj in journeys]
     res = {
-        'companies': all_ccomp,
+        'companies': all_comps,
         'parks': all_parks,
         'journeys': all_journeys
     }
@@ -44,6 +52,9 @@ def index():
 
 @app.get('/companies', strict_slashes=False)
 def get_all_companies():
+    """
+    this returns companies in our database
+    """
     companies = db.session.query(Company).all()
     serializable_companies = [company.to_dict() for company in companies]
     data = {"companies": serializable_companies}
@@ -53,7 +64,12 @@ def get_all_companies():
 
 @app.get('/company/<id>', strict_slashes=False)
 def get_company(id):
-    company = db.session.query(Company).get(escape(id))
+    """
+    this returns a company
+        - all information about a company
+        and the parks associated with the company
+    """
+    company = db.session.get(Company, escape(id))
     if company:            
         serializable_company = company.to_dict()
 
@@ -68,6 +84,12 @@ def get_company(id):
 
 @app.post('/companies', strict_slashes=False)
 def add_company():
+    """
+    the endpoint to add a company
+    the json expects the following args:
+        name, email, tagline, description, pic_url
+        whereby name and email are compulsory
+    """
     data = request.json
 
     name = data.get('name')
@@ -91,6 +113,12 @@ def add_company():
 
 @app.post('/add-park', strict_slashes=False)
 def add_park():
+    """
+    the endpoint to add a park
+    the json expects the following args:
+        name, state, lga(local gov area), town, address, company_id
+        whereby [name, state, lga, address] are compulsory
+    """
     data = request.json
 
     name = data.get('name')
@@ -114,6 +142,9 @@ def add_park():
 
 @app.get('/parks/<park_id>', strict_slashes=False)
 def get_park(park_id):
+    """
+    returns a park
+    """
     obj = db.session.get(Park, escape(park_id))
     if obj:
         new_obj  = obj.to_dict()
@@ -128,6 +159,12 @@ def get_park(park_id):
 
 @app.post('/add-journey', strict_slashes=False)
 def add_journey():
+    """
+    the endpoint to add a journey
+    the json expects the following args:
+        name, from_park_id, to_park_id, price, time (morning || noon || night), company_id
+        whereby [name, from_park_id, to_park_id, time, company_id] are compulsory
+    """
     data = request.json
 
     name = data.get('name')
@@ -154,6 +191,9 @@ def add_journey():
 
 @app.get("/journey/<journey_id>")
 def get_journey(journey_id):
+    """
+    returs all details about a journey
+    """
     journey = db.session.get(Journey, escape(journey_id))
     if journey:
         response = journey.to_dict()
@@ -164,6 +204,11 @@ def get_journey(journey_id):
 
 @app.get("/journeys_search")
 def get_journeys_based_on_query():
+    """
+    returns all journeys that meet the search criteria
+    json expects [from_state, from_lga, from_town, to_state]
+    where only [from_state, to_state] are compulsory
+    """
     data = request.json
 
     from_state = data.get('from_state')
