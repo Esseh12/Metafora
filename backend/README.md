@@ -1,6 +1,8 @@
 
 If youre not already in the backend directory, changeintothe directory uing the command below
+
 ```cd backend/```
+
 then run the `python3 app.py` to start the flask app
 
 it will start the app on localhost:5000
