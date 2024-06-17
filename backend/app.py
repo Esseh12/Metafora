@@ -3,7 +3,7 @@ from models.park import Park
 from models.user import User
 from models.journey import Journey
 from models.base_model import Base
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
@@ -11,7 +11,7 @@ from sqlalchemy import or_, and_
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db2.sqlite"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db3.sqlite"
 
 db = SQLAlchemy(app, model_class=Base)
 
@@ -29,25 +29,28 @@ def not_found(error):
 
 
 
-
 @app.route("/")
 def index():
     """
-    This returns all companies, parks and journeys
+    This returns all companies, parks, journeys and users.
     """
     companies = db.session.query(Company).all()
     parks = db.session.query(Park).all()
     journeys = db.session.query(Journey).all()
+    users = db.session.query(User).all()
 
-    all_comps = [obj.to_dict() for obj in companies]
-    all_parks = [obj.to_dict() for obj in parks]
-    all_journeys = [obj.to_dict() for obj in journeys]
-    res = {
+    all_comps = [company.to_dict() for company in companies]
+    all_parks = [park.to_dict() for park in parks]
+    all_journeys = [journey.to_dict() for journey in journeys]
+    all_users = [user.to_dict() for user in users]
+
+    response = {
         'companies': all_comps,
         'parks': all_parks,
-        'journeys': all_journeys
+        'journeys': all_journeys,
+        'users': all_users
     }
-    return jsonify({'data': res})
+    return jsonify({'data': response})
 
 
 @app.get('/companies', strict_slashes=False)
@@ -275,6 +278,54 @@ def get_journeys_based_on_query():
         
     return jsonify({"data": all_journs})
 
+@app.post("/create-account", strict_slashes=False)
+def create_account():
+    """
+    create a user to the database
+    json expects name, email, password, pic_url. The fields below are compulsory
+    [name || email || password]
+    """
+    data = request.json
+    if 'name' not in data or 'email' not in data or 'password' not in data:
+        return jsonify({'error': 'Mising data [name || email || password]'}), 403
+    
+    name = data.get('name').lower()
+    email = data.get('email').lower()
+    password = data.get('password')
+    pic_url = data.get('pic_url')
+
+
+    if not name or not email or not password:
+        return jsonify({'error': 'Mising data [name || email || password]'}), 403
+
+    usr = db.session.query(User).filter_by(email=email).first()
+    if usr:
+        return jsonify({'error': 'User exists!'}), 403
+
+    user = User(name, email, password, pic_url)
+
+    db.session.add(user)
+    db.session.commit()
+    session['tokennnnn'] = user.id
+
+    return jsonify({'user': {
+        'id': user.id,
+        'name': user.name,
+        'email': user.email,
+        'role': user.role,
+        'pic_url': user.pic_url
+    },
+    'access_token': user.id
+    })
+
+
+@app.get('/profile', strict_slashes=False)
+def profile_page():
+    token = request.authorization.token
+    print(token)
+    print(f'session: {session}')
+        
+    return {'msg': 'profile page'}
 
 if __name__ == "__main__":
     app.run("0.0.0.0", 5000)
