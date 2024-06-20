@@ -79,7 +79,3 @@ def update_park(park_id):
     }
 
     return jsonify({"data": new_data})
-    
-
-    # 8028301121
-    # palmpay

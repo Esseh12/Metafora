@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, redirect, url_for, session
 from models.user import User
 from __init__ import db
 
@@ -47,5 +47,38 @@ def create_account():
 
 
 @users.get('/profile', strict_slashes=False)
-def profile_page():        
-    return jsonify({'msg': 'profile page'})
+def profile_page():
+    if 'email' in session:
+        return jsonify({'msg': f"Welcome {session['email']}"})
+    else:
+        return jsonify({'msg': 'not logged in'})
+
+
+
+@users.post('/login', strict_slashes=False)
+def login():
+    if not session.get('email'):
+        data = request.json
+        email = data.get('email')
+        password = data.get('password')
+
+        obj = db.session.query(User).filter_by(email=email).first()
+        if not obj or obj.password != password:
+            return jsonify({'error': 'Invalid credential'}), 401
+        
+        session['email'] = email
+    
+        
+        return jsonify({"msg": "Logged in successfully"})
+    else:
+        return jsonify({"error": "User already logged in"}), 400
+
+
+
+@users.get('/logout', strict_slashes=False)
+def logout():
+    if session.get('email'):
+        del session['email']
+        return jsonify({'msg': 'logged out!'})
+    else:
+        return jsonify({"error": "no user logged in"})
