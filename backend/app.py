@@ -2,13 +2,9 @@ from models.company import Company
 from models.park import Park
 from models.user import User
 from models.journey import Journey
-from models.base_model import Base
-from flask import Flask, jsonify, request, redirect, session
-from flask_sqlalchemy import SQLAlchemy
-from markupsafe import escape
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy import or_, and_
+from flask import jsonify
 
+#########   import routes from their individual blueprints  #########
 from routes.companies import companies
 from routes.parks import parks
 from routes.journeys import journeys
@@ -16,6 +12,8 @@ from routes.users import users
 
 from __init__ import app, db
 
+
+# register blueprints
 app.register_blueprint(companies)
 app.register_blueprint(parks)
 app.register_blueprint(journeys)
