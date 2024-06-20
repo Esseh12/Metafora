@@ -51,3 +51,35 @@ def get_park(park_id):
         return jsonify({"data": data})
     return jsonify({"error": 'Not found'}), 404
 
+
+@parks.put('/parks/<park_id>', strict_slashes=False)
+def update_park(park_id):
+    """
+    update a park
+    """
+    obj = db.session.get(Park, escape(park_id))
+    if not obj:
+        return jsonify({"error": 'Not found'}), 404
+    data = request.json
+    
+    # if 'company_id' in data.keys():
+    #     return jsonify({"error": "Can't update company_id"}), 400
+
+    for k, v in data.items():
+        if k in ['name', 'state', 'lga', 'town', 'address']:
+            setattr(obj, k, v)
+    
+    db.session.commit()
+
+    updated_obj = db.session.get(Park, escape(park_id))
+    new_obj  = updated_obj.to_dict()
+    new_obj.update({"company" : updated_obj.company.to_dict()})
+    new_data = {
+        "Park" : new_obj
+    }
+
+    return jsonify({"data": new_data})
+    
+
+    # 8028301121
+    # palmpay

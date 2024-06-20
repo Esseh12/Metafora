@@ -44,6 +44,8 @@ def create_account():
     }})
 
 
+
+
 @users.get('/profile', strict_slashes=False)
 def profile_page():        
     return jsonify({'msg': 'profile page'})
