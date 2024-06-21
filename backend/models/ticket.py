@@ -4,12 +4,6 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 
-# id = Column('id', String(100), primary_key=True)
-#     name = Column('name', String(100), nullable=False)
-#     created = Column('created', DateTime)
-#     updated = Column('updated', DateTime)
-
-
 
 class Ticket(BaseModel, Base):
 
@@ -27,14 +21,8 @@ class Ticket(BaseModel, Base):
 
     journey = relationship('Journey')
 
-    # email = Column('email', String(100), unique=True, nullable=False)
-    # tagline = Column('tagline', String(200))
-    # description = Column('description', String(200))
-    # pic_url = Column('pic_url', String(200))
-    # parks = relationship('Park', backref='company')
-    # journeys = relationship('Journey', backref='company')
 
-    def __init__(self, name, passenger_id, journey_id, seat_number, price):
+    def __init__(self, name, passenger_id, journey_id, price, seat_number=None):
         """initialize Ticket model"""
         super().__init__(name)
         self.passenger_id = passenger_id

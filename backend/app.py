@@ -9,6 +9,8 @@ from routes.companies import companies
 from routes.parks import parks
 from routes.journeys import journeys
 from routes.users import users
+from routes.tickets import tickets
+
 
 from __init__ import app, db
 
@@ -18,6 +20,7 @@ app.register_blueprint(companies)
 app.register_blueprint(parks)
 app.register_blueprint(journeys)
 app.register_blueprint(users)
+app.register_blueprint(tickets)
 
 
 @app.errorhandler(404)

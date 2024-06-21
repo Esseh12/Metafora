@@ -34,7 +34,10 @@ class BaseModel:
 
         if "updated" in new_dict:
             new_dict['updated'] = new_dict['updated'].strftime("%Y-%m-%dT%H:%M:%S.%f")
-        
+
+        # if "purchase_date" in new_dict:
+        #     new_dict['updated'] = new_dict['updated'].strftime("%Y-%m-%dT%H:%M:%S.%f")
+
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
