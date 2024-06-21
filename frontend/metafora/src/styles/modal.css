@@ -41,10 +41,10 @@
 .close {
     color: #aaa;
     float: right;
-    padding: 5px;
+    padding: 3px;
     margin-right: 20px;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .close:hover,

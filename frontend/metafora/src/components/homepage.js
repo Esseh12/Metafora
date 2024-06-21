@@ -1,8 +1,14 @@
-import logo from '../images/logo-icon.ico';
+import { IoBus } from "react-icons/io5";
+import { FaChair } from "react-icons/fa";
+import { MdOutlinePayment } from "react-icons/md";
+import { TiTick } from "react-icons/ti";
+import { FaTicketAlt } from "react-icons/fa";
+import mockup from '../images/mockup.png';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import Modal from './modal';
 import '../styles/homepage.css';
+import Navbar from "./navbar";
+
 
 const Homepage = () => {
     const heading = ['Efficient', 'Reliable', 'Simplified'];
@@ -10,39 +16,14 @@ const Homepage = () => {
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
     useEffect(() => {const intervalId = setInterval(() => {
             setCurrentTextIndex(prevIndex => (prevIndex + 1) % heading.length);
-        }, 2500); // Change text every 2 seconds
+        }, 2500); // Change text every 2.5 seconds
 
         return () => clearInterval(intervalId); // Cleanup interval on component unmount
     }, [heading.length])
-    const [modalOpen, setModalOpen] = useState(false);
-    const handleOpenModal = () => {
-        setModalOpen(true);
-    }
-    const handleCloseModal = () => {
-        setModalOpen(false);
-    };
+
     return (
         <>
-            <section className="navbar-section">
-                    <div class="navbar-overlay">
-                        <nav className="navbar">
-                            <div className="logo-container">
-                                <img src={logo} alt="Metafora logo" className="navbar-logo" />
-                                <span className="logo-text">Metafora</span>
-                            </div>
-                            <div className="navbar-text">
-                                <ul className="navbar-list">
-                                        <li className="navbar-item">Home</li>
-                                    <li className="navbar-item">About</li>
-                                    <li className="navbar-item">Services</li>
-                                    <li className="navbar-item">Companies</li>
-                                <button className="navbar-button" onClick={handleOpenModal}>Login</button>
-                                </ul>
-                            </div>
-                        </nav>
-                </div>
-            </section>
-            <Modal show={modalOpen} handleClose={handleCloseModal} />
+            <Navbar />
             <section>
                 <div className="hero-container">
                     <div className="heroe-image">
@@ -63,7 +44,76 @@ const Homepage = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section2">
+                <div class="steps-in-booking">
+                    <div><h1 class="section2-heading">Book your ticket in 4 steps</h1></div>
+                    <div class="section2-container">
+                        <div class="section2-bus-container icon-containers">
+                            <div class="busIcon section2-icon"><IoBus className="icons" /></div>
+                            <div className="icon-text">
+                                <h3>Search for buses</h3>
+                                <p>Select from a wide range of options</p>
+                            </div>
                         </div>
+                        <div className="icon-containers">
+                            <div class="section2-icon"><FaChair className="icons" /></div>
+                            <div className="icon-text">
+                                <h3>Select Seat</h3> 
+                                <p>Choose your preferred seat from the<br />comfort of your phone </p>
+                            </div>
+                        </div>
+                        <div className="icon-containers">
+                            <div class="section2-icon"><MdOutlinePayment className="icons" /></div>
+                            <div className="icon-text">
+                                <h3>Make Payment</h3>
+                                <p>a wide variety of payment option<br />the choice is yours</p>
+                            </div>
+                        </div>
+                        <div className="icon-containers">
+                            <div class="section2-icon"><FaTicketAlt className="icons" /></div>
+                            <div className="icon-text">
+                                <h3>Recieve ticket</h3>
+                                <p>Your ticket details will be sent <br/>to your email</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="aboutPage-section">
+                <div>
+                    <div className="aboutPage-buttons">
+                        <button onClick={() => { alert('why disturbing me'); }}>Customers</button>
+                        <button>Partners</button>
+                    </div>
+                    <div className="aboutPage-content">
+                        <div className="aboutPage-text">
+                            <div className="aboutPage-subcontent">
+                                <h1>Simplify your journey with Metafora</h1>
+                                <span><p><TiTick className="tick"/>Effortlessly connect with top transportation providers for a smooth journey</p></span>
+                            </div>
+                            <div className="aboutPage-subcontent">
+                                <h1>Discover Reliable Solutions</h1>
+                                <span><p><TiTick className="tick"/>Compare and choose the best transportation options for your needs with ease.</p></span>
+                            </div>
+                            <div className="aboutPage-subcontent">
+                                <h1>Seamless and Convenient</h1>
+                                <span><p><TiTick className="tick"/>Experience a hassle-free booking process for all your transportation requirements in one place.</p></span>
+                            </div>
+                        </div>
+                        <div className="mockup-image">
+                            <img src={mockup} alt="mock up from mobile app" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div>
+                    <div>
+                       
+                    </div>
                 </div>
             </section>
         </>

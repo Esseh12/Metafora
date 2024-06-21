@@ -12,73 +12,7 @@
 }
 /* Body styles*/
 body{
-    font-family:Arial, Helvetica, sans-serif;
-}
-/* Navbar container styles*/
-
-.navbar-section {
-    padding: 10px 10px 15px 20px;
-    position: fixed;
-    width: 100%;
-    height: 85px;
-    background-color: #fff;
-}
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-/* Logo container styles */
-.logo-container {
-    display: flex;
-    align-items: center;
-    padding: 10px 50px 0px 0px;
-}
-.navbar-logo{
-    width: 30px;
-    height: auto;
-    margin-right: 10px;
-}
-.logo-text{
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-.navbar-text{
-    flex-grow: 1;
-}
-.navbar-list{
-    display: flex;
-    list-style-type: none;
-    justify-content: flex-end;
-    font-weight: 600;
-}
-.navbar-item{
-    margin-right: 20px;
-    cursor: pointer;
-    padding-top: 27px;
-}
-.navbar-item:hover {
-    border-bottom: 2px solid var(--hoverBlue);
-    color: var(--blue);
-}
-.navbar-button {
-    background-color: var(--hoverBlue);
-    margin-top: 20px;
-    font-weight: 600;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0px 5px 5px #ccc;
-}
-
-.navbar-button:hover {
-    background-color: #fff;
-    color: var(--blue);
-    border: 1px solid var(--blue)
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* background imaage*/
@@ -153,4 +87,96 @@ body{
     height: 7vh;
     bottom: 0;
     right: 0;
+}
+
+/* section 2*/
+.section2{
+    padding-top: 40px;
+}
+.section2-heading{
+    text-align: center;
+    font-size: 2rem;
+}
+.section2-container{
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.section2-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f1f1f1;
+    background-color: #f1f1f1;
+    border-radius: 100%;  
+    height: 100px;
+    width: 100px;
+    margin-bottom: 20px;
+}
+.icon-containers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 20px 0px 20px;
+    line-height: 1.5;
+}
+.icons{
+    font-size: 2.5rem;
+    color: var(--hoverBlue);
+}
+
+.icon-containers h3{
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+}
+.icon-text{
+    text-align: center;
+}
+
+/* About page styling*/
+.aboutPage-buttons{
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 20px;
+    width: 230px;
+    padding: 6px;
+    background-color: #add8e6;
+    border: 1px solid  #add8eb;
+    border-radius: 40px;
+}
+.aboutPage-buttons button {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid red;
+    border-radius: 40px;
+    background-color: #add8e6;
+}
+.aboutPage-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.mockup-image img{
+    width: 35vh;
+}
+.aboutPage-text{
+    margin-top: 50px;
+    font-size: 1rem;
+}
+.aboutPage-content h1{
+    
+    font-size: 1.8rem;
+}
+.aboutPage-subcontent{
+    margin-bottom: 30px;
+}
+.tick{
+    font-size: 1.2rem;
+    border: 1px solid var(--hoverBlue);
+    border-radius: 100%;
+    color: var(--hoverBlue);
 }
