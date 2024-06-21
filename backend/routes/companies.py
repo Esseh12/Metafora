@@ -70,3 +70,46 @@ def add_company():
     new_comp = db.session.get(Company, comp.id).to_dict() 
     return jsonify({"data": new_comp}), 201
 
+
+@companies.put('/company/<company_id>', strict_slashes=False)
+def update_company(company_id):
+    """
+    This Endpoint is to updates the company.
+    Expected Args:
+        name, email: compulsory
+        tagline, 
+    """
+    comp = db.session.get(Company, escape(company_id))
+    if not comp:
+        return jsonify({"error": "Not found"}), 404
+    
+    data = request.json
+    attribute = ["name", "tagline", "description", "pic_url"]
+
+    for key, value in data.items():
+        if key in attribute:
+            setattr(comp, key, value)
+
+    db.session.commit()
+    updated_comp = db.session.get(Company, escape(company_id))
+    new_comp = updated_comp.to_dict()
+    new_data = {
+        "Company": new_comp
+    }
+    return jsonify({"data": new_data}), 201
+
+
+@companies.delete("/company/<company_id>", strict_slashes=False)
+def delete_company(company_id):
+    """
+    This method is to delete a company
+    Args:
+        company_id
+    """
+    comp = db.session.get(Company, escape(company_id))
+    if not comp:
+        return jsonify({"error": "Not found"}), 404
+    
+    db.session.delete(comp)
+    db.session.commit()
+    return jsonify({"msg": "Deleted Successfully"})
