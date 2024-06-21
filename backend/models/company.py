@@ -11,6 +11,8 @@ class Company(BaseModel, Base):
     tagline = Column('tagline', String(200))
     description = Column('description', String(200))
     pic_url = Column('pic_url', String(200))
+    unique_code = Column('unique_code', String(3), unique=True)
+    
     parks = relationship('Park', backref='company')
     journeys = relationship('Journey', backref='company')
 
