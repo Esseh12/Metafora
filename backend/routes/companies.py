@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
 
@@ -49,6 +49,12 @@ def add_company():
         name, email, tagline, description, pic_url
         whereby name and email are compulsory
     """
+    if 'user' not in session:
+        return jsonify({"error": "Not Authorized"}),401
+    
+    if session['user']['role'] != 'admin':
+        return jsonify({"error": "Not Authorized, must be an admin"}),401
+    
     data = request.json
 
     name = data.get('name')

@@ -48,8 +48,8 @@ def create_account():
 
 @users.get('/profile', strict_slashes=False)
 def profile_page():
-    if 'email' in session:
-        return jsonify({'msg': f"Welcome {session['email']}"})
+    if 'user' in session:
+        return jsonify({'msg': f"Welcome {session['user']['name']}"})
     else:
         return jsonify({'msg': 'not logged in'})
 
@@ -57,7 +57,7 @@ def profile_page():
 
 @users.post('/login', strict_slashes=False)
 def login():
-    if not session.get('email'):
+    if not session.get('user'):
         data = request.json
         email = data.get('email')
         password = data.get('password')
@@ -66,9 +66,12 @@ def login():
         if not obj or obj.password != password:
             return jsonify({'error': 'Invalid credential'}), 401
         
-        session['email'] = email
-    
-        
+        session['user'] = \
+            {
+            'name': obj.name,
+            'role': obj.role
+            }   
+
         return jsonify({"msg": "Logged in successfully"})
     else:
         return jsonify({"error": "User already logged in"}), 400
@@ -77,8 +80,8 @@ def login():
 
 @users.get('/logout', strict_slashes=False)
 def logout():
-    if session.get('email'):
-        del session['email']
+    if session.get('user'):
+        del session['user']
         return jsonify({'msg': 'logged out!'})
     else:
         return jsonify({"error": "no user logged in"})

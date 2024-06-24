@@ -4,6 +4,7 @@ from backend.models.user import User
 from backend.models.journey import Journey
 from backend.models.ticket import Ticket
 from flask import jsonify
+from os import environ
 
 #########   import routes from their individual blueprints  #########
 from backend.routes.companies import companies
@@ -59,4 +60,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", 5000)
+    app.run("0.0.0.0", environ.get('PORT'))
