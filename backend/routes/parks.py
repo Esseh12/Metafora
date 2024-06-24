@@ -79,3 +79,19 @@ def update_park(park_id):
     }
 
     return jsonify({"data": new_data})
+
+
+@parks.delete("/parks/<park_id>", strict_slashes=False)
+def delete_park(park_id):
+    """
+    This Method deletes a park from database
+    Args:
+        park_id
+    """
+    park = db.session.get(Park, escape(park_id))
+    if not park:
+        return jsonify({"error": "Not found"}), 404
+    db.session.delete(park)
+    db.session.commit()
+
+    return jsonify({"msg": "Park Sucessfully deleted!"})
