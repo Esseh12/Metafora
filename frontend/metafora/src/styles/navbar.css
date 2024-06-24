@@ -99,12 +99,12 @@
 }
 
 .bm-cross-button {
-    height: 30px;
-    width: 30px;
+    height: 60px;
+    width: 60px;
 }
 
 .bm-cross {
-    background: #bdc3c7;
+    background: black;
     margin-left: 0;
 }
 

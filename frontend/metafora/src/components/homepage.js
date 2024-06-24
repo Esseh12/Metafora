@@ -4,49 +4,17 @@ import { MdOutlinePayment } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { FaTicketAlt } from "react-icons/fa";
 import mockup from '../images/mockup.png';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
 import '../styles/homepage.css';
 import Navbar from "./navbar";
+import Hero from "./hero";
 
 
 const Homepage = () => {
-    const heading = ['Efficient', 'Reliable', 'Simplified'];
-
-    const [currentTextIndex, setCurrentTextIndex] = useState(0);
-    useEffect(() => {const intervalId = setInterval(() => {
-            setCurrentTextIndex(prevIndex => (prevIndex + 1) % heading.length);
-        }, 2500); // Change text every 2.5 seconds
-
-        return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }, [heading.length])
 
     return (
         <>
             <Navbar />
-            <section>
-                <div className="hero-container">
-                    <div className="heroe-image">
-                        <div className="heroe-overlay">
-                            <div className="hero-text">
-                                <h1>Discover {heading[currentTextIndex]} Transportation solution</h1>
-                            </div>
-                            <div className="main-booking-container">
-                                <div className="booking-container">
-                                    <div className="booking-items"><input placeholder='Leaving from' type="text"/></div>
-                                    <div className="booking-items"><input placeholder='Going to' type="text"/></div>
-                                    <div className="booking-items"><input type="month" placeholder='Leaving On'/></div>
-                                    <div className="booking-items"><p>Return(optional)</p></div>
-                                    <div><button>Search</button></div>
-                                    <div className="booking-container-overlay">
-                                        <h1>hello</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <Hero />
             <section class="section2">
                 <div class="steps-in-booking">
                     <div><h1 class="section2-heading">Book your ticket in 4 steps</h1></div>
