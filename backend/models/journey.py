@@ -1,4 +1,4 @@
-from models.base_model import Base, BaseModel
+from backend.models.base_model import Base, BaseModel
 from sqlalchemy import Integer, String, Column, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -22,6 +22,7 @@ class Journey(BaseModel, Base):
 
     from_park = relationship('Park', foreign_keys=[from_park_id], backref='journeys_from')
     to_park = relationship('Park', foreign_keys=[to_park_id], backref='to_journeys')
+
     
     def __init__(self, name, from_park_id, to_park_id, price, time, company_id):
         super().__init__(name)

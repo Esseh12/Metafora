@@ -1,18 +1,19 @@
-from models.company import Company
-from models.park import Park
-from models.user import User
-from models.journey import Journey
+from backend.models.company import Company
+from backend.models.park import Park
+from backend.models.user import User
+from backend.models.journey import Journey
+from backend.models.ticket import Ticket
 from flask import jsonify
 
 #########   import routes from their individual blueprints  #########
-from routes.companies import companies
-from routes.parks import parks
-from routes.journeys import journeys
-from routes.users import users
-from routes.tickets import tickets
+from backend.routes.companies import companies
+from backend.routes.parks import parks
+from backend.routes.journeys import journeys
+from backend.routes.users import users
+from backend.routes.tickets import tickets
 
 
-from __init__ import app, db
+from backend.__init__ import app, db
 
 
 # register blueprints
@@ -38,17 +39,21 @@ def index():
     parks = db.session.query(Park).all()
     journeys = db.session.query(Journey).all()
     users = db.session.query(User).all()
+    tickets = db.session.query(Ticket).all()
 
     all_comps = [company.to_dict() for company in companies]
     all_parks = [park.to_dict() for park in parks]
     all_journeys = [journey.to_dict() for journey in journeys]
     all_users = [user.to_dict() for user in users]
+    all_tickets = [ticket.to_dict() for ticket in tickets]
+
 
     response = {
         'companies': all_comps,
         'parks': all_parks,
         'journeys': all_journeys,
-        'users': all_users
+        'users': all_users,
+        'tickets': all_tickets
     }
     return jsonify({'data': response})
 

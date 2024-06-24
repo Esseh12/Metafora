@@ -2,8 +2,8 @@ from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
 
-from models.ticket import Ticket
-from __init__ import db
+from backend.models.ticket import Ticket
+from backend.__init__ import db
 
 tickets = Blueprint('tickets', __name__)
 

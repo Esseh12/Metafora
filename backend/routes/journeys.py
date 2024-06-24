@@ -3,10 +3,10 @@ from markupsafe import escape
 from sqlalchemy import or_, and_
 
 
-from models.journey import Journey
-from models.park import Park
+from backend.models.journey import Journey
+from backend.models.park import Park
 
-from __init__ import db
+from backend.__init__ import db
 
 journeys = Blueprint('journeys', __name__)
 

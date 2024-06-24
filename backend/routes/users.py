@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, redirect, url_for, session
-from models.user import User
-from __init__ import db
+from backend.models.user import User
+from backend.__init__ import db
 
 
 users = Blueprint('users', __name__)

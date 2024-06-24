@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
 
-from models.park import Park
-from __init__ import db
+from backend.models.park import Park
+from backend.__init__ import db
 
 parks = Blueprint('parks', __name__)
 

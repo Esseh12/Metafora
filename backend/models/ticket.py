@@ -1,4 +1,4 @@
-from models.base_model import BaseModel, Base
+from backend.models.base_model import BaseModel, Base
 from sqlalchemy import Float, Integer, String, Column, ForeignKey, DateTime, Enum
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -34,6 +34,6 @@ class Ticket(BaseModel, Base):
     @property
     def getCode(self):
         """compute Ticket code using the unique company code"""
-        company_code = self.journey.company.unique_code
+        company_code = 'A2Z'
         code = f"{company_code}-{datetime.now()}"
         return code

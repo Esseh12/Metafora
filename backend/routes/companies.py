@@ -2,8 +2,8 @@ from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
 
-from models.company import Company
-from __init__ import db
+from backend.models.company import Company
+from backend.__init__ import db
 
 companies = Blueprint('companies', __name__)
 
@@ -53,15 +53,16 @@ def add_company():
 
     name = data.get('name')
     email = data.get('email')
-    tagline = data.get('tagline', 'no tagline')
-    description = data.get('description', 'no discription')
-    pic_url = data.get('pic_url','no pic')
+    unique_code = data.get('unique_code')
+    tagline = data.get('tagline')
+    description = data.get('description')
+    pic_url = data.get('pic_url')
 
-    if not name or not email:
-        return jsonify({"error": "Missing data [name || email]"}), 400
+    if not name or not email or not unique_code:
+        return jsonify({"error": "Missing data [name || email || unique_code]"}), 400
     
     try:
-        comp = Company(name, email, tagline, description, display_pic_url=pic_url)
+        comp = Company(name, email, unique_code, tagline, description, pic_url)
         db.session.add(comp)
         db.session.commit()
     except IntegrityError:
