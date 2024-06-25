@@ -1,12 +1,15 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
 
+from flask_jwt_extended import jwt_required, get_jwt
+
 from backend.models.park import Park
 from backend.__init__ import db
 
 parks = Blueprint('parks', __name__)
 
 @parks.post('/add-park', strict_slashes=False)
+@jwt_required()
 def add_park():
     """
     the endpoint to add a park
@@ -14,6 +17,9 @@ def add_park():
         name, state, lga(local gov area), town, address, company_id
         whereby [name, state, lga, address] are compulsory
     """
+    if get_jwt()['sub']['role'] == 'user':
+        return jsonify({"error": "Not Authorized, must be company_rep or admin"}),401
+
     data = request.json
 
     name = data.get('name')
@@ -53,10 +59,14 @@ def get_park(park_id):
 
 
 @parks.put('/parks/<park_id>', strict_slashes=False)
+@jwt_required()
 def update_park(park_id):
     """
     update a park
     """
+    if get_jwt()['sub']['role'] == 'user':
+        return jsonify({"error": "Not Authorized, must be company_rep or admin"}),401
+
     obj = db.session.get(Park, escape(park_id))
     if not obj:
         return jsonify({"error": 'Not found'}), 404
@@ -82,12 +92,16 @@ def update_park(park_id):
 
 
 @parks.delete("/parks/<park_id>", strict_slashes=False)
+@jwt_required()
 def delete_park(park_id):
     """
     This Method deletes a park from database
     Args:
         park_id
     """
+    if get_jwt()['sub']['role'] == 'user':
+        return jsonify({"error": "Not Authorized, must be company_rep or admin"}),401
+
     park = db.session.get(Park, escape(park_id))
     if not park:
         return jsonify({"error": "Not found"}), 404

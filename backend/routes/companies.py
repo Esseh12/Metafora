@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, session
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
+from flask_jwt_extended import get_jwt, jwt_required
 
 from backend.models.company import Company
 from backend.__init__ import db
@@ -41,7 +42,9 @@ def get_company(id):
         return jsonify({"msg": "Company Not Found"}), 404
 
 
+
 @companies.post('/companies', strict_slashes=False)
+@jwt_required()
 def add_company():
     """
     the endpoint to add a company
@@ -49,12 +52,17 @@ def add_company():
         name, email, tagline, description, pic_url
         whereby name and email are compulsory
     """
-    if 'user' not in session:
-        return jsonify({"error": "Not Authorized"}),401
+    # if 'user' not in session:
+    #     return jsonify({"error": "Not Authorized"}),401
     
-    if session['user']['role'] != 'admin':
+    
+    # if session['user']['role'] != 'admin':
+    #     return jsonify({"error": "Not Authorized, must be an admin"}),401
+    
+    if get_jwt()['sub']['role'] != 'admin':
         return jsonify({"error": "Not Authorized, must be an admin"}),401
-    
+
+
     data = request.json
 
     name = data.get('name')
@@ -79,6 +87,7 @@ def add_company():
 
 
 @companies.put('/company/<company_id>', strict_slashes=False)
+@jwt_required()
 def update_company(company_id):
     """
     This Endpoint is to updates the company.
@@ -86,6 +95,9 @@ def update_company(company_id):
         name, email: compulsory
         tagline, 
     """
+    if get_jwt()['sub']['role'] != 'admin':
+        return jsonify({"error": "Not Authorized, must be an admin"}),401
+
     comp = db.session.get(Company, escape(company_id))
     if not comp:
         return jsonify({"error": "Not found"}), 404
@@ -107,12 +119,16 @@ def update_company(company_id):
 
 
 @companies.delete("/company/<company_id>", strict_slashes=False)
+@jwt_required()
 def delete_company(company_id):
     """
     This method is to delete a company
     Args:
         company_id
     """
+    if get_jwt()['sub']['role'] != 'admin':
+        return jsonify({"error": "Not Authorized, must be an admin"}),401
+
     comp = db.session.get(Company, escape(company_id))
     if not comp:
         return jsonify({"error": "Not found"}), 404

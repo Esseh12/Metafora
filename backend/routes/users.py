@@ -1,13 +1,14 @@
 from flask import Blueprint, jsonify, request, redirect, url_for, session
 from backend.models.user import User
 from backend.__init__ import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt
 
 users = Blueprint('users', __name__)
 
 
-@users.post("/create-account", strict_slashes=False)
-def create_account():
+@users.post("/register", strict_slashes=False)
+def register_user():
     """
     create a user to the database
     json expects name, email, password, pic_url. The fields below are compulsory
@@ -29,8 +30,11 @@ def create_account():
     usr = db.session.query(User).filter_by(email=email).first()
     if usr:
         return jsonify({'error': 'User exists!'}), 403
+    
+    # hash password before creating a user object
+    hashedPass = generate_password_hash(password)
 
-    user = User(name, email, password, pic_url)
+    user = User(name, email, hashedPass, pic_url)
 
     db.session.add(user)
     db.session.commit()
@@ -46,36 +50,78 @@ def create_account():
 
 
 
-@users.get('/profile', strict_slashes=False)
-def profile_page():
-    if 'user' in session:
-        return jsonify({'msg': f"Welcome {session['user']['name']}"})
-    else:
-        return jsonify({'msg': 'not logged in'})
+# @users.get('/profile', strict_slashes=False)
+# def profile_page():
+#     if 'user' in session:
+#         return jsonify({'msg': f"Welcome {session['user']['name']}"})
+#     else:
+#         return jsonify({'msg': 'not logged in'})
+
+
+
+# @users.post('/login', strict_slashes=False)
+# def login():
+#     if not session.get('user'):
+#         data = request.json
+#         email = data.get('email')
+#         password = data.get('password')
+
+#         obj = db.session.query(User).filter_by(email=email).first()
+#         # if not obj or obj.password != password:
+#         if not obj or not check_password_hash(obj.password, password):
+#             return jsonify({'error': 'Invalid credential'}), 401
+        
+#         session['user'] = \
+#             {
+#             'name': obj.name,
+#             'role': obj.role
+#             }   
+
+#         return jsonify({"msg": "Logged in successfully"})
+#     else:
+#         return jsonify({"error": "User already logged in"}), 400
 
 
 
 @users.post('/login', strict_slashes=False)
 def login():
-    if not session.get('user'):
-        data = request.json
-        email = data.get('email')
-        password = data.get('password')
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
 
-        obj = db.session.query(User).filter_by(email=email).first()
-        if not obj or obj.password != password:
-            return jsonify({'error': 'Invalid credential'}), 401
-        
-        session['user'] = \
-            {
-            'name': obj.name,
-            'role': obj.role
-            }   
+    user = db.session.query(User).filter_by(email=email).first()
 
-        return jsonify({"msg": "Logged in successfully"})
-    else:
-        return jsonify({"error": "User already logged in"}), 400
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({'error': 'Invalid credential'}), 401
+    
+    identity_obj = {
+        'id': user.id,
+        'name': user.name,
+        'role': user.role
+    }
+    
+    access = create_access_token(identity=identity_obj)
+    refresh = create_refresh_token(identity=identity_obj)
+    
+    return jsonify(
+        {
+            "msg": "Logged in successfully",
+            "tokens": {
+                "access": access,
+                "refresh": refresh
+            }
+        }
+    )
 
+
+
+@users.get('/profile', strict_slashes=False)
+@jwt_required()
+def profile_page():
+    claims = get_jwt()
+    # print(request.authorization.token)
+    # return jsonify({"claims": claims['claim']['sub']['name']})
+    return jsonify({"data": claims['sub']})
 
 
 @users.get('/logout', strict_slashes=False)

@@ -12,8 +12,6 @@ journeys = Blueprint('journeys', __name__)
 
 
 
-
-
 @journeys.post('/add-journey', strict_slashes=False)
 def add_journey():
     """

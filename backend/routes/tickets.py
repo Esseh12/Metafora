@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
-from sqlalchemy.exc import IntegrityError
-
+from flask_jwt_extended import jwt_required, get_jwt
 from backend.models.ticket import Ticket
 from backend.__init__ import db
 
@@ -44,6 +43,7 @@ tickets = Blueprint('tickets', __name__)
 
 
 @tickets.post('/tickets/create', strict_slashes=False)
+@jwt_required()
 def create_ticket():
     """
     the endpoint to add a ticket.
@@ -68,4 +68,3 @@ def create_ticket():
 
     new_ticket = db.session.get(Ticket, ticket.id).to_dict() 
     return jsonify({"data": new_ticket}), 201
-
