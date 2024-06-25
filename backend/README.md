@@ -45,3 +45,18 @@ GET /journeys_search
 
         returns all journeys that meet the search criteria json expects
         [from_state, from_lga, from_town, to_state] where only [from_state, to_state] are compulsory
+
+
+POST /register
+        create a user to the database
+        json expects name, email, password, pic_url. The fields below are compulsory
+        [name || email || password]
+
+POST /login
+    login a user, here a pair of jwt tokens are created
+    email and password are required for json
+
+GET /profile
+    logged in user details returned
+
+remember to include the access tokens to the authorization bearer or header where neccesary

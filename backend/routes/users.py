@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, redirect, url_for, session
+from flask import Blueprint, jsonify, request, session
 from backend.models.user import User
 from backend.__init__ import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -85,6 +85,7 @@ def register_user():
 
 @users.post('/login', strict_slashes=False)
 def login():
+    """login endpoint"""
     data = request.json
     email = data.get('email')
     password = data.get('password')

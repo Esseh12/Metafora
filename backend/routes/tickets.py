@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
-from flask_jwt_extended import jwt_required, get_jwt
+from flask_jwt_extended import jwt_required
 from backend.models.ticket import Ticket
 from backend.__init__ import db
 
