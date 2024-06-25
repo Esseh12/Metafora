@@ -14,7 +14,7 @@ const Services = () => {
     }
 
     return (
-        <section className="services-section">
+        <section id="services-section">
             <div className="services-container">
                 <div className="service-box">
                     <div className="icon-container"><FaRegSmile className="service-icon" /></div>
@@ -32,7 +32,7 @@ const Services = () => {
                     <div className="icon-container"><FaTruck className="service-icon" /></div>
                     <h2>Way Bill</h2>
                     <p>Efficient waybill services for all your logistics needs.</p>
-                    <a className="service-link">See More →</a>
+                    <a  href="./companies.js" className="service-link">See More →</a>
                 </div>
             </div>
             {showPopup && (

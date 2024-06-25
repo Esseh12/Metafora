@@ -17,7 +17,7 @@ const About = () => {
 
     return (
         <>
-            <section className="aboutPage-section">
+            <section id="aboutPage-section">
                 <div>
                     <div className="aboutPage-buttons">
                         <button onClick={handleCustomerClick} className={isCustomerView ? "active" : ""}>Customers</button>

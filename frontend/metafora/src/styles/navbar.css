@@ -62,6 +62,11 @@
     color: var(--blue);
 }
 
+.navbar-link{
+    text-decoration: none;
+    color:black;
+}
+
 .navbar-button {
     background-color: var(--hoverBlue);
     margin-top: 20px;
@@ -84,10 +89,10 @@
 /* Burger menu styles */
 .bm-burger-button {
     position: fixed;
-    width: 30px;
-    height: 30px;
-    right: 30px;
-    top: 28px;
+    width: 20px;
+    height: 20px;
+    right: 20px;
+    top: 30px;
 }
 
 .bm-burger-bars {
@@ -95,7 +100,7 @@
 }
 
 .bm-burger-bars-hover {
-    background: var(--hoverBlue);
+    background: var(--blue);
 }
 
 .bm-cross-button {
@@ -117,7 +122,7 @@
 .bm-menu {
     background: #f1f1f1;
     padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
+    font-size: 0.8rem;
 }
 
 .bm-morph-shape {
@@ -133,12 +138,11 @@
     display: block;
     color: black;
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     padding: 10px;
 }
 
 .bm-overlay {
-    background: rgba(0, 0, 0, 0.3);
     top: 0;
 }
 

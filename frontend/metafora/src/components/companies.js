@@ -9,7 +9,7 @@ const Companies = () => {
         setShowMessage(true);
     };
 
-    const [companies, setCompanies] = useState([
+    const [companies, /*setCompanies */] = useState([
         { id: 1, name: "Company One", description: "Leading in technology solutions", url: "/company-one" },
         { id: 2, name: "Company Two", description: "Innovative healthcare services", url: "/company-two" },
         { id: 3, name: "Company Three", description: "Top-tier logistics and transport", url: "/company-three" },
@@ -25,7 +25,7 @@ const Companies = () => {
 
     return (
         <>
-            <section>
+            <section id="companies-section">
                 <div className="listing-banner">
                     <div className="listing-banner-content">
                         <h1>Are you a Bus Operator?</h1>
