@@ -131,7 +131,7 @@ def get_journeys_based_on_query():
     return jsonify({"data": all_journs})
 
 
-@journeys.put("/journey/<int:journey_id>")
+@journeys.put("/journey/<journey_id>")
 def update_journey(journey_id):
     """
     Updates the details about a journey
@@ -154,7 +154,7 @@ def update_journey(journey_id):
     return jsonify({"data": new_data}), 201
 
 
-@journeys.delete(/journey/<journey_id>)
+@journeys.delete('/journey/<journey_id>')
 def delete_journey(journey_id):
     """
     Deletes a journey

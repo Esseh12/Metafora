@@ -120,11 +120,11 @@ def login():
 def profile_page():
     claims = get_jwt()
     # print(request.authorization.token)
-    # return jsonify({"claims": claims['claim']['sub']['name']})
     return jsonify({"data": claims['sub']})
 
 
 @users.get('/logout', strict_slashes=False)
+@jwt_required()
 def logout():
     if session.get('user'):
         del session['user']
