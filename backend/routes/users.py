@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session
-from backend.models.user import User
+from backend.models.user import User, TokenBlockList
 from backend.__init__ import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt
@@ -121,14 +121,29 @@ def login():
 def profile_page():
     claims = get_jwt()
     # print(request.authorization.token)
-    return jsonify({"data": claims['sub']})
+    return jsonify({"msg": f"Welcome {claims['sub']['name']}"})
+
+
+# @users.get('/logout', strict_slashes=False)
+# @jwt_required()
+# def logout():
+#     request.authorization
+#     if session.get('user'):
+#         del session['user']
+#         return jsonify({'msg': 'logged out!'})
+#     else:
+#         return jsonify({"error": "no user logged in"})
 
 
 @users.get('/logout', strict_slashes=False)
 @jwt_required()
 def logout():
-    if session.get('user'):
-        del session['user']
-        return jsonify({'msg': 'logged out!'})
-    else:
-        return jsonify({"error": "no user logged in"})
+    jwt = get_jwt()
+    jti = jwt['jti']
+
+    token = TokenBlockList(jti=jti)
+
+    db.session.add(token)
+    db.session.commit()
+
+    return jsonify({'msg': 'User logged out successfully!'})

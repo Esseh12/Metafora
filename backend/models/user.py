@@ -1,11 +1,12 @@
 from backend.models.base_model import Base, BaseModel
-from sqlalchemy import String, Column, Enum, ForeignKey
+from sqlalchemy import String, Column, Integer,  Enum, ForeignKey, DateTime
+from datetime import datetime
 
 
 
 class User(BaseModel, Base):
 
-    __tablename__ =  "users"
+    __tablename__ = "users"
 
     email = Column('email', String(100), unique=True, nullable=False)
     password = Column('password', String, nullable=False)
@@ -19,3 +20,11 @@ class User(BaseModel, Base):
         self.email = email
         self.password = password
         self.pic_url = pic_url
+
+
+class TokenBlockList(Base):
+    __tablename__ = "tokenblocklist"
+
+    id = Column('id', Integer, primary_key=True, autoincrement=True)
+    jti = Column('jti', String)
+    created_at = Column('created_at', DateTime, default=datetime.now())

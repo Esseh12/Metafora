@@ -1,6 +1,6 @@
 from backend.models.company import Company
 from backend.models.park import Park
-from backend.models.user import User
+from backend.models.user import User, TokenBlockList
 from backend.models.journey import Journey
 from backend.models.ticket import Ticket
 from flask import jsonify
@@ -14,7 +14,7 @@ from backend.routes.users import users
 from backend.routes.tickets import tickets
 
 
-from backend.__init__ import app, db
+from backend.__init__ import app, db, jwt
 
 
 # register blueprints
@@ -29,6 +29,16 @@ app.register_blueprint(tickets)
 def not_found(error):
     """This Handles any 404 error"""
     return jsonify({"error": str(error.name)}), 404
+
+@jwt.token_in_blocklist_loader
+def token_in_blocklist(jwt_header, jwt_data):
+    jti = jwt_data['jti']
+
+    token = db.session.query(TokenBlockList).filter_by(jti=jti).scalar()
+
+    return token is not None
+
+    ...
 
 
 @app.route("/")

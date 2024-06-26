@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from sqlalchemy import or_, and_
+from flask_jwt_extended import jwt_required, get_jwt
 
 
 from backend.models.journey import Journey
@@ -155,10 +156,15 @@ def update_journey(journey_id):
 
 
 @journeys.delete('/journey/<journey_id>')
+@jwt_required()
 def delete_journey(journey_id):
     """
     Deletes a journey
     """
+    claims = get_jwt()
+    
+    if claims['sub']['role'] == 'user':
+        return jsonify({"error": "Not AUthorized"}), 400
     journey = db.session.get(Journey, escape(journey_id))
     if not journey:
         return jsonify({"error": "Not found"}), 404
