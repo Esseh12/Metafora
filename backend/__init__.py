@@ -12,7 +12,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 
 
 
-app.secret_key = environ.get('SECRET_KEY')   # needed for session to work
+app.secret_key = environ.get('JWT_SECRET_KEY')   # needed for session or jwt to work
+
 
 db = SQLAlchemy(app, model_class=Base)
 jwt = JWTManager(app)
