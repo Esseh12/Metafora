@@ -17,10 +17,8 @@ app.secret_key = environ.get('SECRET_KEY')   # needed for session to work
 db = SQLAlchemy(app, model_class=Base)
 jwt = JWTManager(app)
 
-# @jwt.ex
 
 migrate = Migrate(app, db)
-# m.init_app(app,db)
 
 
 with app.app_context():

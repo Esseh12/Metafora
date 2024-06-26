@@ -32,13 +32,15 @@ def not_found(error):
 
 @jwt.token_in_blocklist_loader
 def token_in_blocklist(jwt_header, jwt_data):
+    """ this check if the token is in the blocklist
+    if true, it revokes the token
+    useful for logout implementation
+    """
     jti = jwt_data['jti']
 
     token = db.session.query(TokenBlockList).filter_by(jti=jti).scalar()
 
     return token is not None
-
-    ...
 
 
 @app.route("/")

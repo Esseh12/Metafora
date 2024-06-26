@@ -76,7 +76,10 @@ def add_company():
         return jsonify({"error": "Missing data [name || email || unique_code]"}), 400
     
     try:
-        comp = Company(name, email, unique_code, tagline, description, pic_url)
+        comp = Company(
+            escape(name), escape(email), escape(unique_code),
+            escape(tagline), escape(description), escape(pic_url)
+        )
         db.session.add(comp)
         db.session.commit()
     except IntegrityError:
@@ -107,7 +110,8 @@ def update_company(company_id):
 
     for key, value in data.items():
         if key in attribute:
-            setattr(comp, key, value)
+            if value:  # this is to avoid setting a null value
+                setattr(comp, key, value)
 
     db.session.commit()
     updated_comp = db.session.get(Company, escape(company_id))

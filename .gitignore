@@ -1,3 +1,4 @@
 backend/models/__pycache__/*
 backend/routes/__pycache__/*
 backend/__pycache__/*
+__pycache__
