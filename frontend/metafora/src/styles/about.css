@@ -1,4 +1,7 @@
 /* About page styling */
+#aboutPage-section{
+  margin-bottom: 90px;  
+}
 .aboutPage-buttons {
     display: flex;
     justify-content: space-evenly;
@@ -36,7 +39,7 @@
 }
 
 .mockup-image img {
-    width: 35vh;
+    width: 30vh;
     transition: all 0.5s ease-in-out;
 }
 
@@ -52,6 +55,15 @@
 
 .aboutPage-subcontent {
     margin-bottom: 30px;
+}
+
+.aboutPage-subcontent span {
+    display: flex;
+    align-items: center;
+}
+
+.aboutPage-subcontent span p {
+    margin-left: 10px;
 }
 
 .tick {
