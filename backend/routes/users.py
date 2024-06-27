@@ -93,7 +93,7 @@ def login():
     user = db.session.query(User).filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
-        return jsonify({'error': 'Invalid credential'}), 401
+        return jsonify({'error': 'Invalid credential', 'status':401}), 401
     
     identity_obj = {
         'id': user.id,
@@ -106,6 +106,7 @@ def login():
     
     return jsonify(
         {
+            "status": 200,
             "msg": "Logged in successfully",
             "tokens": {
                 "access": access,

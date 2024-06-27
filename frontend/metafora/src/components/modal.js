@@ -11,6 +11,37 @@ const Modal = ({ show, handleClose}) => {
 
         // let formJson = JSON.stringify(email);
         // alert(formJson);
+        // const headerBody = {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ name: companyName }),
+        //   }
+
+        fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        )
+        .then(response => response.json())
+        .then(data => {
+            console.log(data['tokens']['access'])
+            localStorage.setItem("accessToken", data['tokens']['access'])
+            console.log(data['msg'])
+                
+            // setCompanies(data['data']['companies'])
+            }
+        )
+        .catch(error => {
+            console.error('Error login in:');
+
+            }
+        );
+
         console.log(`Email: ${email}`);
         console.log(`${password}`);        
     }
