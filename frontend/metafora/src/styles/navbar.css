@@ -1,0 +1,158 @@
+/* Navbar container styles */
+.navbar-section {
+    padding: 12px 10px 15px 20px;
+    position: fixed;
+    width: 100%;
+    height: 85px;
+    background-color: #fff;
+    border-bottom: 3px solid lightgrey;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo container styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 50px 0px 0px;
+}
+
+.navbar-logo {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.navbar-text {
+    flex-grow: 1;
+}
+
+
+.mobile-menu {
+    display: none;
+}
+
+/* Navbar list and items */
+.navbar-list {
+    display: flex;
+    list-style-type: none;
+    justify-content: flex-end;
+    font-weight: 600;
+}
+
+.navbar-item {
+    margin-right: 20px;
+    cursor: pointer;
+    padding-top: 27px;
+}
+
+.navbar-item:hover {
+    border-bottom: 2px solid var(--hoverBlue);
+    color: var(--blue);
+}
+
+.navbar-link{
+    text-decoration: none;
+    color:black;
+}
+
+.navbar-button {
+    background-color: var(--hoverBlue);
+    margin-top: 20px;
+    font-weight: 600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 5px 5px #ccc;
+}
+
+.navbar-button:hover {
+    background-color: #fff;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+/* Burger menu styles */
+.bm-burger-button {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    right: 20px;
+    top: 30px;
+}
+
+.bm-burger-bars {
+    background: #373a47;
+}
+
+.bm-burger-bars-hover {
+    background: var(--blue);
+}
+
+.bm-cross-button {
+    height: 60px;
+    width: 60px;
+}
+
+.bm-cross {
+    background: black;
+    margin-left: 0;
+}
+
+.bm-menu-wrap {
+    position: fixed;
+    height: 100vh;
+    top: 0;
+}
+
+.bm-menu {
+    background: #f1f1f1;
+    padding: 2.5em 1.5em 0;
+    font-size: 0.8rem;
+}
+
+.bm-morph-shape {
+    fill: black;
+}
+
+.bm-item-list {
+    color: black;
+    padding: 0.8em;
+}
+
+.bm-item {
+    display: block;
+    color: black;
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 10px;
+}
+
+.bm-overlay {
+    top: 0;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .desktop-menu {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+}

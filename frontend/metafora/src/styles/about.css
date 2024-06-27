@@ -1,0 +1,166 @@
+/* About page styling */
+#aboutPage-section{
+  margin-bottom: 90px;  
+}
+.aboutPage-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 20px;
+    width: 230px;
+    padding: 6px;
+    background-color: #add8e6;
+    border: 1px solid #add8eb;
+    border-radius: 40px;
+}
+
+.aboutPage-buttons button {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 40px;
+    background-color: #add8e6;
+    transition: all 0.3s ease-in-out;
+}
+
+.aboutPage-buttons button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.aboutPage-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 30px;
+    transition: all 0.5s ease-in-out;
+}
+
+.mockup-image img {
+    width: 30vh;
+    transition: all 0.5s ease-in-out;
+}
+
+.aboutPage-text {
+    margin-top: 50px;
+    font-size: 1rem;
+    transition: all 0.5s ease-in-out;
+}
+
+.aboutPage-content h1 {
+    font-size: 1.8rem;
+}
+
+.aboutPage-subcontent {
+    margin-bottom: 30px;
+}
+
+.aboutPage-subcontent span {
+    display: flex;
+    align-items: center;
+}
+
+.aboutPage-subcontent span p {
+    margin-left: 10px;
+}
+
+.tick {
+    font-size: 1.2rem;
+    border: 1px solid var(--hoverBlue);
+    border-radius: 100%;
+    color: var(--hoverBlue);
+}
+
+/* Media Queries */
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    .aboutPage-buttons {
+        flex-direction: column;
+        width: 150px;
+    }
+
+    .aboutPage-buttons button {
+        margin-bottom: 10px;
+    }
+
+    .aboutPage-content {
+        flex-direction: column;
+    }
+
+    .aboutPage-text {
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+
+    .aboutPage-content h1 {
+        font-size: 1.2rem;
+    }
+
+    .mockup-image img {
+        width: 25vh;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .aboutPage-buttons {
+        width: 180px;
+    }
+
+    .aboutPage-content {
+        flex-direction: column;
+    }
+
+    .aboutPage-text {
+        font-size: 1rem;
+    }
+
+    .aboutPage-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .mockup-image img {
+        width: 30vh;
+    }
+}
+
+/* Small Desktops */
+@media (max-width: 1024px) {
+    .aboutPage-buttons {
+        width: 200px;
+    }
+
+    .aboutPage-text {
+        font-size: 1rem;
+    }
+
+    .aboutPage-content h1 {
+        font-size: 1.7rem;
+    }
+
+    .mockup-image img {
+        width: 32vh;
+    }
+}
+
+/* Large Desktops */
+@media (max-width: 1200px) {
+    .aboutPage-buttons {
+        width: 220px;
+    }
+
+    .aboutPage-text {
+        font-size: 1rem;
+    }
+
+    .aboutPage-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .mockup-image img {
+        width: 34vh;
+    }
+}
