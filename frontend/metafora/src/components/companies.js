@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/companies.css';
 
 const Companies = () => {
@@ -9,19 +9,19 @@ const Companies = () => {
         setShowMessage(true);
     };
 
-    const [companies, /*setCompanies */] = useState([
-        { id: 1, name: "Company One", description: "Leading in technology solutions", url: "/company-one" },
-        { id: 2, name: "Company Two", description: "Innovative healthcare services", url: "/company-two" },
-        { id: 3, name: "Company Three", description: "Top-tier logistics and transport", url: "/company-three" },
+    const [companies, setCompanies ] = useState([
+        // { id: 1, name: "Company One", description: "Leading in technology solutions", url: "/company-one" },
+        // { id: 2, name: "Company Two", description: "Innovative healthcare services", url: "/company-two" },
+        // { id: 3, name: "Company Three", description: "Top-tier logistics and transport", url: "/company-three" },
     ]);
 
     // Future implementation to fetch data from an API
-    // useEffect(() => {
-    //     fetch('/api/companies')
-    //         .then(response => response.json())
-    //         .then(data => setCompanies(data))
-    //         .catch(error => console.error('Error fetching companies:', error));
-    // }, []);
+    useEffect(() => {
+        fetch('http://127.0.0.1:5000/companies')
+            .then(response => response.json())
+            .then(data => setCompanies(data['data']['companies']))
+            .catch(error => console.error('Error fetching companies:', error));        
+    }, []);
 
     return (
         <>
@@ -40,12 +40,15 @@ const Companies = () => {
                 </div>
             </section>
             <section className="companies-section">
+                <h1>Onboarded Companies</h1>    {/*<<<<<<<<<< Kindly style this, Ese! */}
+
                 <div className="companies-container">
                     {companies.map(company => (
                         <div key={company.id} className="company-box">
                             <h2>{company.name}</h2>
                             <p>{company.description}</p>
-                            <a href={company.url} className="company-link">Visit Company →</a>
+                            <blockquote>{company.tagline}</blockquote>
+                            <a href={company.unique_code} className="company-link">Visit Company →</a>
                         </div>
                     ))}
                 </div>
