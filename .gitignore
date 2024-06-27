@@ -1,0 +1,5 @@
+__pycache__
+backend/__pycache__
+backend/models/__pycache__
+backend/routes/__pycache__
+migrations/__pycache__
