@@ -1,0 +1,110 @@
+:root{
+    --label_text: #4a5568;
+    --blue: rgb(51, 51, 255);
+    --hoverBlue: rgb(41, 41, 204);
+}
+
+*{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    text-align: center;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 65%;
+    max-width: 450px;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    padding: 3px;
+    margin-right: 20px;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-user-icon{
+    font-size: 50px;
+}
+.modal-heading{
+    padding-top: 30px;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.modal-label{
+    display: block;
+    text-align: left;
+    margin: 30px 0px 10px 20px;
+    font-weight: 400;
+    color: var(--label_text);
+}
+.modal-input{
+    width: 90%;
+    padding: 8px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+.modal-button{
+    display: block;
+    margin: auto;
+    margin-top: 4rem;
+    width: 55%;
+    padding: 10px;
+    border: 1px solid var(--blue);
+    border-radius: 5px;
+    background-color: var(--blue);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.modal-text{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 20px;
+    margin-bottom: 3px;
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+.link{
+    text-decoration: none;
+    color: #4a5ff4;
+    float: right;
+    margin-right: 24px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+.signup{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1rem;
+    float: none;
+}

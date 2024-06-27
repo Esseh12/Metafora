@@ -1,0 +1,173 @@
+.companies-section {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+}
+
+.companies-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1s forwards;
+}
+
+.company-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.company-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.company-box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.company-box p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.company-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.company-link:hover {
+    text-decoration: underline;
+}
+
+/* listing banner*/
+.listing-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    background-image: url('../images/listingBackground.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    border-radius: 60px;
+    width: 72%;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.listing-banner-content {
+    max-width: 600px;
+}
+
+.listing-banner h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.listing-banner p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.listing-banner button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.listing-banner button:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    margin-top: 20px;
+    background-color: #ffcccb;
+    padding: 10px;
+    border-radius: 5px;
+    color: #d8000c;
+    font-size: 1rem;
+}
+
+.message a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries */
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    .companies-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .company-box {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .companies-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .company-box {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Small Desktops */
+@media (max-width: 1024px) {
+    .companies-container {
+        flex-wrap: wrap;
+    }
+
+    .company-box {
+        width: 45%;
+    }
+}
+
+/* Large Desktops */
+@media (max-width: 1200px) {
+    .companies-container {
+        flex-wrap: wrap;
+    }
+
+    .company-box {
+        width: 30%;
+    }
+}

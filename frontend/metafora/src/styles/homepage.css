@@ -1,0 +1,22 @@
+/* root variables*/
+:root{
+    --blue: rgb(51, 51, 255);
+    --hoverBlue: rgb(41, 41, 204);
+    --overlay: rgba(0, 0, 0, 0.5);
+}
+/* reset default margin and padding*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Body styles*/
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+html{
+    scroll-behavior: smooth;
+}
+section{
+    scroll-margin-top: 6.5rem;
+}
