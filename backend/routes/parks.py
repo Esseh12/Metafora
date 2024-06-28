@@ -18,7 +18,7 @@ def add_park():
         whereby [name, state, lga, address] are compulsory
     """
     if get_jwt()['sub']['role'] == 'user':
-        return jsonify({"error": "Not Authorized, must be company_rep or admin"}),401
+        return jsonify({"status": 401, "error": "Not Authorized, must be company_rep or admin"}),401
 
     data = request.json
 
@@ -30,7 +30,7 @@ def add_park():
     company_id = data.get('company_id', None)
 
     if not name or not state or not lga or not address:
-        return jsonify({"error": "Missing data [name, state, lga, address]"}), 400
+        return jsonify({"status": 400, "error": "Missing data [name, state, lga, address]"}), 400
 
     park = Park(name, state, lga, town, address, company_id)
 
@@ -38,7 +38,7 @@ def add_park():
     db.session.commit()
 
     new_park = db.session.get(Park, park.id).to_dict() 
-    return jsonify({"data": new_park}), 201
+    return jsonify({"status": 201, "data": new_park}), 201
 
 
 @parks.get('/parks/<park_id>', strict_slashes=False)
@@ -55,7 +55,7 @@ def get_park(park_id):
         }
 
         return jsonify({"data": data})
-    return jsonify({"error": 'Not found'}), 404
+    return jsonify({"status": 404, "error": 'Not found'}), 404
 
 
 @parks.put('/parks/<park_id>', strict_slashes=False)
@@ -65,11 +65,11 @@ def update_park(park_id):
     update a park
     """
     if get_jwt()['sub']['role'] == 'user':
-        return jsonify({"error": "Not Authorized, must be company_rep or admin"}),401
+        return jsonify({"status": 401, "error": "Not Authorized, must be company_rep or admin"}),401
 
     obj = db.session.get(Park, escape(park_id))
     if not obj:
-        return jsonify({"error": 'Not found'}), 404
+        return jsonify({"status": 404, "error": 'Not found'}), 404
     data = request.json
     
     # if 'company_id' in data.keys():
@@ -88,7 +88,7 @@ def update_park(park_id):
         "Park" : new_obj
     }
 
-    return jsonify({"data": new_data})
+    return jsonify({"status": 200, "data": new_data})
 
 
 @parks.delete("/parks/<park_id>", strict_slashes=False)
@@ -104,8 +104,8 @@ def delete_park(park_id):
 
     park = db.session.get(Park, escape(park_id))
     if not park:
-        return jsonify({"error": "Not found"}), 404
+        return jsonify({"status": 404, "error": "Not found"}), 404
     db.session.delete(park)
     db.session.commit()
 
-    return jsonify({"msg": "Park Sucessfully deleted!"})
+    return jsonify({"status": 200, "msg": "Park Sucessfully deleted!"})

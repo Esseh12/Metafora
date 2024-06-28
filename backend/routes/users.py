@@ -16,7 +16,7 @@ def register_user():
     """
     data = request.json
     if 'name' not in data or 'email' not in data or 'password' not in data:
-        return jsonify({'error': 'Mising data [name || email || password]'}), 403
+        return jsonify({"status": 403, 'error': 'Mising data [name || email || password]'}), 403
     
     name = data.get('name').lower()
     email = data.get('email').lower()
@@ -25,11 +25,11 @@ def register_user():
 
 
     if not name or not email or not password:
-        return jsonify({'error': 'Mising data [name || email || password]'}), 403
+        return jsonify({"status": 403, 'error': 'Mising data [name || email || password]'}), 403
 
     usr = db.session.query(User).filter_by(email=email).first()
     if usr:
-        return jsonify({'error': 'User exists!'}), 403
+        return jsonify({"status": 403, 'error': 'User exists!'}), 403
     
     # hash password before creating a user object
     hashedPass = generate_password_hash(password)
@@ -39,7 +39,7 @@ def register_user():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({'user': {
+    return jsonify({"status": 200, 'user': {
         'id': user.id,
         'name': user.name,
         'email': user.email,
@@ -93,7 +93,7 @@ def login():
     user = db.session.query(User).filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
-        return jsonify({'error': 'Invalid credential', 'status':401}), 401
+        return jsonify({"status": 401, 'error': 'Invalid credential', 'status':401}), 401
     
     identity_obj = {
         'id': user.id,
@@ -122,7 +122,7 @@ def login():
 def profile_page():
     claims = get_jwt()
     # print(request.authorization.token)
-    return jsonify({"msg": f"Welcome {claims['sub']['name']}"})
+    return jsonify({"status": 200, "msg": f"Welcome {claims['sub']['name']}"})
 
 
 # @users.get('/logout', strict_slashes=False)
@@ -147,4 +147,4 @@ def logout():
     db.session.add(token)
     db.session.commit()
 
-    return jsonify({'msg': 'User logged out successfully!'})
+    return jsonify({"status": 200, 'msg': 'User logged out successfully!'})

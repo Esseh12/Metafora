@@ -32,10 +32,10 @@ def add_journey():
 
 
     if not name or not from_park_id or not to_park_id or not time or not company_id:
-        return jsonify({"msg": "missing data [name, from_park_id, to_park_id, time, company_id]"}), 400
+        return jsonify({"status": 401, "error": "missing data [name, from_park_id, to_park_id, time, company_id]"}), 401
 
     if time not in ["morning", "noon", "night"]:
-        return jsonify({"msg": "time must be morning || noon || night"}), 400
+        return jsonify({"status": 401, "error": "time must be morning || noon || night"}), 401
 
     journey = Journey(name, from_park_id, to_park_id, price, time, company_id)
 
@@ -43,7 +43,7 @@ def add_journey():
     db.session.commit()
 
     new_journey = db.session.get(Journey, journey.id).to_dict()
-    return jsonify({"data": new_journey}), 201
+    return jsonify({"status": 201, "data": new_journey}), 201
 
 @journeys.get("/journey/<journey_id>")
 def get_journey(journey_id):
@@ -53,9 +53,9 @@ def get_journey(journey_id):
     journey = db.session.get(Journey, escape(journey_id))
     if journey:
         response = journey.to_dict()
-        return jsonify({"data": response})
+        return jsonify({"status": 200, "data": response})
     else:
-        return jsonify({"msg": "Journey Not Found"}), 404
+        return jsonify({"status": 404, "error": "Journey Not Found"}), 404
 
 
 @journeys.get("/journeys_search")
@@ -73,7 +73,7 @@ def get_journeys_based_on_query():
     to_state = data.get('to_state')
 
     if not from_state or not to_state:
-        return jsonify({"error": "Missing data [from_state, to_state]"}), 400
+        return jsonify({"status": 400, "error": "Missing data [from_state, to_state]"}), 400
     
 
     journeys = db.session.query(Journey).join(Park, Journey.from_park_id == Park.id).filter(
@@ -93,7 +93,7 @@ def get_journeys_based_on_query():
         )
     ).distinct().all()
     if not journeys:
-        return {"msg": "No journey for your current location at the moment"}
+        return {"status": 200, "msg": "No journey for your current location at the moment"}
 
     all_journs = []
 
@@ -129,7 +129,7 @@ def get_journeys_based_on_query():
 
         all_journs.append(journ_dict)
         
-    return jsonify({"data": all_journs})
+    return jsonify({"status": 200, "data": all_journs})
 
 
 @journeys.put("/journey/<journey_id>")
@@ -152,7 +152,7 @@ def update_journey(journey_id):
     new_data = {
         "Journey": new_journey
     }
-    return jsonify({"data": new_data}), 201
+    return jsonify({"status": 201, "data": new_data}), 201
 
 
 @journeys.delete('/journey/<journey_id>')
@@ -164,11 +164,11 @@ def delete_journey(journey_id):
     claims = get_jwt()
     
     if claims['sub']['role'] == 'user':
-        return jsonify({"error": "Not AUthorized"}), 400
+        return jsonify({"status": 400, "error": "Not AUthorized"}), 400
     journey = db.session.get(Journey, escape(journey_id))
     if not journey:
-        return jsonify({"error": "Not found"}), 404
+        return jsonify({"status": 404, "error": "Not found"}), 404
     
     db.session.delete(journey)
     db.session.commit()
-    return jsonify({"msg": "Journey successfully deleted"})
+    return jsonify({"status": 200, "msg": "Journey successfully deleted"})
