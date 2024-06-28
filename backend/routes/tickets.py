@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from flask_jwt_extended import jwt_required
 from backend.models.ticket import Ticket
-from backend.__init__ import db, mail, Message
+from backend.__init__ import db, email
 
 tickets = Blueprint('tickets', __name__)
 
@@ -70,8 +70,11 @@ def create_ticket():
 
     # sends email
 
-    msg = Message('Metafora Ticket', sender='dremkay71@gmail.com', recipients=['official_metafora@fastmail.com'])
-    msg.body = new_ticket
-    mail.send(msg)
+    # msg = Message('Metafora Ticket', sender='dremkay71@gmail.com', recipients=['official_metafora@fastmail.com'])
+
+    email.sendMail('meta@fora.com', 'michael_k70@ymail.com', new_ticket)
+
+    # msg.body = new_ticket
+    # mail.send(msg)
 
     return jsonify({"status": 201, "data": new_ticket}), 201

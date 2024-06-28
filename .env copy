@@ -2,11 +2,9 @@ FLASK_APP=backend/application.py
 SQLALCHEMY_DATABASE_URI=sqlite:///db2.sqlite
 # SECRET_KEY=test_secret
 JWT_SECRET_KEY=emmanuelEseImole  # a highly secured secret key
-MAIL_SERVER=smtp.gmail.com
-MAIL_PASSWORD=pxtpheeruhbzmqgj
-MAIL_USERNAME=dremkay71@gmail.com
-MAIL_PORT=465
-MAIL_USE_SSL=True
-MAIL_USE_TLS=False
-
 PORT=5001
+
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587  #587 for tls and 465 for ssl
+MAIL_USERNAME=dremkay71@gmail.com
+MAIL_PASSWORD=pxtpheeruhbzmqgj
