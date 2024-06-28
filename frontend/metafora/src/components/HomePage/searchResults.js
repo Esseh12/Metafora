@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from './navbar';
-import Footer from './footer';
+import Navbar from '../HomePage/searchResults';
+import Footer from '../HomePage/footer';
 import { useLocation } from 'react-router-dom'; // Importing useLocation hook from react-router-dom to access current location
-import '../styles/searchResults.css'; // Importing CSS styles for SearchResults component
+import '../../styles/searchResults.css'; // Importing CSS styles for SearchResults component
 
 const SearchResults = () => {
     const location = useLocation(); // Using useLocation hook to get current location object

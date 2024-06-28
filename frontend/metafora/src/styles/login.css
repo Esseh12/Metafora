@@ -146,6 +146,49 @@ a {
 }
 
 
+@media (max-width: 1024px) {
+    .login-page {
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 4.5rem;
+        height: 125vh;
+    }
+
+    .login-subcontainer {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+    }
+    .loginImg img{
+        width: 50px;
+    }
+    .loginImg h2{
+        font-size: 1.7rem;
+    }
+    .login-subcontainer h2 {
+        margin-top: 6rem;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+    }
+
+    .login-subcontainer h5 {
+        font-size: 1.6rem;
+    }
+
+    .login-form {
+        padding: 3rem;
+        padding-top: 2rem;
+        margin-top: 70px;
+        width: 38rem;
+    }
+
+    button {
+        padding: 13px;
+        width: 15vw;
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 768px) {
     .login-page {
         padding-left: 3.7rem;

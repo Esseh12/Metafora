@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import '../styles/about.css';
+import '../../styles/about.css';
 import { TiTick } from "react-icons/ti";
-import mockup from '../images/mockup.png';
-import partnersMockup from '../images/GigCarousel.jpeg'; // Assuming a different image for partners
+import mockup from '../../images/mockup.png';
+import partnersMockup from '../../images/PartnerMockup.png'; // Assuming a different image for partners
 
 const About = () => {
     const [isCustomerView, setIsCustomerView] = useState(true);
