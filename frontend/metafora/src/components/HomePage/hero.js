@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/hero.css';
+import '../../styles/hero.css';
 
 const Hero = () => {
     // Define state variables

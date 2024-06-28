@@ -1,4 +1,4 @@
-import "../styles/steps.css";
+import "../../styles/steps.css";
 import { IoBus } from "react-icons/io5";
 import { FaChair } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";

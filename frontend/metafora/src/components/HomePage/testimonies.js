@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/testimonies.css';
+import '../../styles/testimonies.css';
 
 const Testimonies = () => {
     const testimonies = [

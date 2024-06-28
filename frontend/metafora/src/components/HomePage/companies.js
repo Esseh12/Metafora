@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/companies.css';
+import '../../styles/companies.css';
 
 const Companies = () => {
     // for listing banner

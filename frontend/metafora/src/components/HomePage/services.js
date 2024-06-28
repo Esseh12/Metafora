@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/services.css';
+import '../../styles/services.css';
 import { FaRegSmile, FaTruck, FaUsers } from 'react-icons/fa';
 
 const Services = () => {
