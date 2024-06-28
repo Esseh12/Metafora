@@ -28,20 +28,21 @@ const Modal = ({ show, handleClose}) => {
         )
         .then(response => response.json())
         .then(data => {
+            if (data['status'] !== 200){
+                throw new Error(data['error']);
+            }
             console.log(data['tokens']['access'])
             localStorage.setItem("accessToken", data['tokens']['access'])
-            console.log(data['msg'])
-                
+            console.log(data['msg'])                
             // setCompanies(data['data']['companies'])
             }
         )
         .catch(error => {
-            console.error('Error login in:');
+            console.log(error);
             }
         );
-
-        console.log(`Email: ${email}`);
-        console.log(`${password}`);        
+        // console.log(`Email: ${email}`);
+        // console.log(`${password}`);        
     }
 
     return (
