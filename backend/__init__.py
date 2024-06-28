@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from os import environ
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flask_mail import Mail, Message # for email
 
 
 app = Flask(__name__)

@@ -8,7 +8,6 @@ const Modal = ({ show, handleClose}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         // let formJson = JSON.stringify(email);
         // alert(formJson);
         // const headerBody = {
@@ -38,7 +37,6 @@ const Modal = ({ show, handleClose}) => {
         )
         .catch(error => {
             console.error('Error login in:');
-
             }
         );
 
