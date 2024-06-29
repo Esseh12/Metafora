@@ -4,6 +4,8 @@ from backend.__init__ import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt
 
+from helpers.utils import validate_email
+
 users = Blueprint('users', __name__)
 
 
@@ -26,6 +28,9 @@ def register_user():
 
     if not name or not email or not password:
         return jsonify({"status": 403, 'error': 'Mising data [name || email || password]'}), 403
+    
+    if not validate_email(email):
+        return jsonify({"status": 400, "error": "invalid email"}), 400
 
     usr = db.session.query(User).filter_by(email=email).first()
     if usr:

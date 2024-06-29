@@ -1,10 +1,12 @@
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import get_jwt, jwt_required
 
 from backend.models import Company
 from backend.__init__ import db
+
+from helpers.utils import validate_email
 
 companies = Blueprint('companies', __name__)
 
@@ -74,6 +76,10 @@ def add_company():
 
     if not name or not email or not unique_code:
         return jsonify({"status": 400, "error": "Missing data [name || email || unique_code]"}), 400
+    
+
+    if not validate_email(email):
+        return jsonify({"status": 400, "error": "invalid email"}), 400
     
     try:
         comp = Company(
