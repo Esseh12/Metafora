@@ -4,6 +4,7 @@ from markupsafe import escape
 from flask_jwt_extended import jwt_required, get_jwt
 
 from backend.models.park import Park
+from backend.models.company import Company
 from backend.__init__ import db
 
 parks = Blueprint('parks', __name__)
@@ -31,6 +32,12 @@ def add_park():
 
     if not name or not state or not lga or not address:
         return jsonify({"status": 400, "error": "Missing data [name, state, lga, address]"}), 400
+    
+
+    # this is to make sure non-existing company_id is added to the database
+    if company_id:
+        if not db.session.get(Company, company_id):
+            company_id = None
 
     park = Park(name, state, lga, town, address, company_id)
 
