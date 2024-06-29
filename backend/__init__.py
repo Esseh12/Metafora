@@ -26,7 +26,7 @@ app.secret_key = environ.get('JWT_SECRET_KEY')   # needed for session or jwt to 
 CORS(app)
 db = SQLAlchemy(app, model_class=Base)
 jwt = JWTManager(app)
-email = Email()
+# email = Email() # to be uncommented for email service
 
 #################################################
 

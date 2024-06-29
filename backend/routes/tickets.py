@@ -3,7 +3,7 @@ from markupsafe import escape
 from flask_jwt_extended import jwt_required
 from backend.models import Ticket
 from backend.models import User
-from backend.__init__ import db, email
+from backend.__init__ import db #, email
 
 tickets = Blueprint('tickets', __name__)
 
@@ -76,6 +76,6 @@ def create_ticket():
 
     new_ticket = ticket_obj.to_dict()
 
-    email.sendMail('meta@fora.com', ticket_obj.user.email, new_ticket)
+    # email.sendMail('meta@fora.com', ticket_obj.user.email, new_ticket) # to be uncommented for email service
     
     return jsonify({"status": 201, "data": new_ticket}), 201

@@ -7,11 +7,11 @@ from flask import jsonify
 from os import environ
 
 #########   import routes from their individual blueprints  #########
-from backend.routes.companies import companies
-from backend.routes.parks import parks
-from backend.routes.journeys import journeys
-from backend.routes.users import users
-from backend.routes.tickets import tickets
+from backend.routes import companies
+from backend.routes import parks
+from backend.routes import journeys
+from backend.routes import users
+from backend.routes import tickets
 
 
 from backend.__init__ import app, db, jwt
