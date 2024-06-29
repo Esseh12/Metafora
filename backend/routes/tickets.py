@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from flask_jwt_extended import jwt_required
-from backend.models.ticket import Ticket
-from backend.models.user import User
+from backend.models import Ticket
+from backend.models import User
 from backend.__init__ import db, email
 
 tickets = Blueprint('tickets', __name__)

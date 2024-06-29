@@ -1,8 +1,8 @@
-from backend.models.company import Company
-from backend.models.park import Park
-from backend.models.user import User, TokenBlockList
-from backend.models.journey import Journey
-from backend.models.ticket import Ticket
+from backend.models import Company
+from backend.models import Park
+from backend.models import User, TokenBlockList
+from backend.models import Journey
+from backend.models import Ticket
 from flask import jsonify
 from os import environ
 

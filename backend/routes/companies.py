@@ -3,7 +3,7 @@ from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import get_jwt, jwt_required
 
-from backend.models.company import Company
+from backend.models import Company
 from backend.__init__ import db
 
 companies = Blueprint('companies', __name__)

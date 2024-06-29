@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session
-from backend.models.user import User, TokenBlockList
+from backend.models import User, TokenBlockList
 from backend.__init__ import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt

@@ -4,8 +4,8 @@ from sqlalchemy import or_, and_
 from flask_jwt_extended import jwt_required, get_jwt
 
 
-from backend.models.journey import Journey
-from backend.models.park import Park
+from backend.models import Journey
+from backend.models import Park
 
 from backend.__init__ import db
 

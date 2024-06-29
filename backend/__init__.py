@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from backend.models.base_model import Base
-from backend.models.mail import Email
+# from backend.models.base_model import Base
+from backend.models import Base
+# from backend.models.mail import Email
+from backend.models import Email
+
 from flask_migrate import Migrate
 from os import environ
 from flask_jwt_extended import JWTManager

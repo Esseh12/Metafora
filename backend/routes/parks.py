@@ -3,8 +3,8 @@ from markupsafe import escape
 
 from flask_jwt_extended import jwt_required, get_jwt
 
-from backend.models.park import Park
-from backend.models.company import Company
+from backend.models import Park
+from backend.models import Company
 from backend.__init__ import db
 
 parks = Blueprint('parks', __name__)
