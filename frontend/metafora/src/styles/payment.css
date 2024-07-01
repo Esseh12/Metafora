@@ -1,4 +1,4 @@
-.seat-selection-overlay {
+.payment-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,40 +10,34 @@
     align-items: center;
 }
 
-.seat-selection-popup {
+.payment-popup {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 600px;
+    max-width: 400px;
     width: 90%;
 }
 
-.seat-selection-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+.payment-popup h2 {
+    margin-bottom: 20px;
 }
 
-.seat {
-    background: #ddd;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
+.form-group {
+    margin-bottom: 15px;
 }
 
-.seat.booked {
-    background: red;
-    cursor: not-allowed;
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
 }
 
-.seat.selected {
-    background: green;
-    color: white;
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 button {
-    margin-top: 10px;
     padding: 10px 20px;
     background: #007bff;
     color: white;
@@ -54,4 +48,9 @@ button {
 
 button:hover {
     background: #0056b3;
+}
+
+.payment-popup p {
+    font-size: 16px;
+    margin-bottom: 10px;
 }
