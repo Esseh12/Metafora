@@ -4,6 +4,7 @@ import Hero from './components/HomePage/hero';
 import SearchResults from './components/HomePage/searchResults';
 import Homepage from './components/HomePage/homepage';
 import Login from './components/Authethication/login';
+import Signup from './components/Authethication/signup';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
             </Route>
             <Route path="/search-results" element={<SearchResults />} />
             <Route path="/login" element={<Login />} />
-            </Routes>
+            <Route path="/signup" element={< Signup />} />
+          </Routes>
         </Router>
     </>
   );

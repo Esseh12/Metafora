@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/login.css';
 import Logo from '../../images/logo.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const LoginPage = () => {
+const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // state to toggle password visibility
@@ -92,7 +92,7 @@ const LoginPage = () => {
                             <a href="/forgot-password" className='links'> Forgot password?</a>
                             <div className="last__div">
                                 <a href="/signup"><span className="links__span">New User?</span>Create account</a>
-                                <button type="submit">Sign In</button>
+                                <button type="submit">Sign in</button>
                             </div>
                         </form>
                 </div>
@@ -103,4 +103,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default Signup;

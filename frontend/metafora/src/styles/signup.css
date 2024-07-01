@@ -6,21 +6,21 @@ html {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.login-page {
-    height: 100vh;
+.signup-page {
+    height: 120vh;
     background-color: rgb(208, 239, 245);
     padding-left: 5.7rem;
     padding-right: 5.7rem;
     padding-top: 4.5rem;
-    background-size: cover;
 }
 
-.loginImg {
+.signupImg {
     display: flex;
     align-items: center;
     cursor: pointer;
 }
-.loginImg h2{
+
+.signupImg h2 {
     font-size: 1.3rem;
 }
 
@@ -28,28 +28,38 @@ html {
     width: 40px;
     margin-right: 5px;
 }
-
-.login-subcontainer {
+.name__div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.name__div label{
+    display: block
+}
+.name__div input{
+    width: 14rem;
+}
+.signup-subcontainer {
     display: flex;
     height: 48vh;
     justify-content: space-between;
     align-items: center;
 }
 
-.login-subcontainer h2 {
+.signup-subcontainer h2 {
     color: #535252;
     margin-bottom: 20px;
     font-size: 3rem;
 }
 
-.login-subcontainer h5 {
+.signup-subcontainer h5 {
     color: rgba(10, 46, 101, .3);
     font-size: 1.6rem;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 700;
 }
 
-.login-form {
+.signup-form {
     background: rgba(255, 255, 255, 0.9);
     padding: 3rem;
     padding-top: 2rem;
@@ -73,21 +83,24 @@ label {
 
 input {
     padding: 10px;
-    height: 3rem;
+    height: 2rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-top: 1px;
     font-size: 14px;
 }
-.password-input{
+
+.password-input {
     border: none;
 }
+
 .password-container {
     position: relative;
     border: 1px solid #ddd;
     border-radius: 5px;
     color: rgba(10, 46, 101, .3);
 }
+
 /* Remove focus highlight */
 input:focus,
 button:focus {
@@ -109,6 +122,7 @@ button:focus {
     cursor: pointer;
     font-size: 1.2rem;
 }
+
 button {
     padding: 15px;
     background: #007bff;
@@ -148,35 +162,38 @@ a {
 
 
 @media (max-width: 1024px) {
-    .login-page {
+    .signup-page {
         padding-left: 4rem;
         padding-right: 4rem;
         padding-top: 4.5rem;
-        height: 125vh;
+        height: 170vh;
     }
 
-    .login-subcontainer {
+    .signup-subcontainer {
         display: flex;
         flex-direction: column;
         align-items: baseline;
     }
-    .loginImg img{
+
+    .signupImg img {
         width: 50px;
     }
-    .loginImg h2{
+
+    .signupImg h2 {
         font-size: 1.7rem;
     }
-    .login-subcontainer h2 {
-        margin-top: 6rem;
+
+    .signup-subcontainer h2 {
+        margin-top: 4rem;
         margin-bottom: 20px;
         font-size: 2.5rem;
     }
 
-    .login-subcontainer h5 {
+    .signup-subcontainer h5 {
         font-size: 1.6rem;
     }
 
-    .login-form {
+    .signup-form {
         padding: 3rem;
         padding-top: 2rem;
         margin-top: 70px;
@@ -191,63 +208,68 @@ a {
 }
 
 @media (max-width: 768px) {
-    .login-page {
+    .signup-page {
         padding-left: 3.7rem;
         padding-right: 3.7rem;
         padding-top: 3.5rem;
-        height: 120vh;
+        height: 155vh;
     }
-    .login-subcontainer {
+
+    .signup-subcontainer {
         display: flex;
         flex-direction: column;
         align-items: baseline;
     }
-    .login-subcontainer h2 {
-        margin-top: 4rem;
+
+    .signup-subcontainer h2 {
+        margin-top: 3rem;
         margin-bottom: 20px;
         font-size: 2rem;
-        }
-    
-        .login-subcontainer h5 {
-            font-size: 1.4rem;
-        }
+    }
 
-        .login-form {
-            padding: 3rem;
-            padding-top: 2rem;
-            margin-top: 40px;
-            width: 32rem;
-        }
-        button {
-            padding: 13px;
-            width: 15vw;
-            font-size: 0.85rem;
-        }
+    .signup-subcontainer h5 {
+        font-size: 1.4rem;
+    }
+
+    .signup-form {
+        padding: 3rem;
+        padding-top: 2rem;
+        margin-top: 40px;
+        width: 32rem;
+    }
+
+    button {
+        padding: 13px;
+        width: 15vw;
+        font-size: 0.85rem;
+    }
 }
 
-@media (max-width: 600px){
-    .login-page {
+@media (max-width: 600px) {
+    .signup-page {
         padding-left: 2rem;
         padding-right: 2rem;
         padding-top: 2.2rem;
-        height: 110vh;
+        height: 145vh;
     }
-    .login-subcontainer h2 {
+
+    .signup-subcontainer h2 {
         margin-top: 3rem;
         margin-bottom: 20px;
         font-size: 1.8rem;
     }
 
-    .login-subcontainer h5 {
+    .signup-subcontainer h5 {
         font-size: 1.3rem;
     }
 
-    .login-form {
+    .signup-form {
         padding: 2.4rem;
         padding-top: 1rem;
         padding-bottom: 1.9rem;
         width: 20rem;
     }
+
     .last__div {
         margin-top: 1.5rem;
         display: flex;
@@ -259,5 +281,8 @@ a {
         padding: 13px;
         width: 25vw;
         font-size: 0.85rem;
+    }
+    .name__div input {
+        width: 7.3rem;
     }
 }
