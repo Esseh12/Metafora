@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 # from backend.models.base_model import Base
 from backend.models import Base
-# from backend.models.mail import Email
+from backend.models import Email
 from backend.models import Email
 
 from flask_migrate import Migrate
@@ -26,7 +26,7 @@ app.secret_key = environ.get('JWT_SECRET_KEY')   # needed for session or jwt to 
 CORS(app)
 db = SQLAlchemy(app, model_class=Base)
 jwt = JWTManager(app)
-# email = Email() # to be uncommented for email service
+email = Email() # to be uncommented for email service
 
 #################################################
 
