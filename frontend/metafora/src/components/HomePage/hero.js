@@ -30,11 +30,11 @@ const Hero = () => {
         const value = e.target.value;
         if (type === 'leavingFrom') {
             setLeavingFrom(value); // Update leavingFrom state
-            setFilteredRoutes(routes.filter(route => route.toLowerCase().includes(value.toLowerCase()))); // Filter routes based on input value
+            setFilteredRoutes(routes.filter(route => route.toLowerCase().includes(value.toLowerCase()) && route !== goingTo)); // Filter routes based on input value
             setShowDropdown({ ...showDropdown, leavingFrom: true }); // Show dropdown for leavingFrom
         } else if (type === 'goingTo') {
             setGoingTo(value); // Update goingTo state
-            setFilteredRoutes(routes.filter(route => route.toLowerCase().includes(value.toLowerCase()))); // Filter routes based on input value
+            setFilteredRoutes(routes.filter(route => route.toLowerCase().includes(value.toLowerCase()) && route !== leavingFrom)); // Filter routes based on input value
             setShowDropdown({ ...showDropdown, goingTo: true }); // Show dropdown for goingTo
         }
     };
@@ -59,7 +59,11 @@ const Hero = () => {
 
     // Handle search button click to navigate to search results page
     const handleSearch = () => {
-        navigate('/search-results', { state: { leavingFrom, goingTo } }); // Navigate to search-results page with leavingFrom and goingTo states
+        if (leavingFrom && goingTo) {
+            navigate('/search-results', { state: { leavingFrom, goingTo } }); // Navigate to search-results page with leavingFrom and goingTo states
+        } else {
+            alert('Please enter both Leaving from and Going to fields.');
+        }
     };
 
     // Render JSX
@@ -82,7 +86,7 @@ const Hero = () => {
                                         onChange={(e) => handleInputChange(e, 'leavingFrom')}
                                         onFocus={() => setShowDropdown({ ...showDropdown, leavingFrom: true })}
                                         onBlur={() => handleBlur('leavingFrom')}
-                                        required/>
+                                        required />
                                     {/* Dropdown for "Leaving from" */}
                                     {showDropdown.leavingFrom && (
                                         <ul className="dropdown">
@@ -101,7 +105,7 @@ const Hero = () => {
                                         onChange={(e) => handleInputChange(e, 'goingTo')}
                                         onFocus={() => setShowDropdown({ ...showDropdown, goingTo: true })}
                                         onBlur={() => handleBlur('goingTo')}
-                                        required/>
+                                        required />
                                     {/* Dropdown for "Going to" */}
                                     {showDropdown.goingTo && (
                                         <ul className="dropdown">
