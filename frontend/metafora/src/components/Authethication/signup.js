@@ -6,6 +6,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Signup = () => {
     // State variables for form inputs and errors
+    const [name, setName] = useState('');
+
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -44,20 +46,20 @@ const Signup = () => {
 
         // Dummy API call to backend for signup (replace with actual API call)
         try {
-            const response = await fetch('/api/signup', {
+            const response = await fetch('http://127.0.0.1:5000/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ name, email, password }),
             });
 
             // Check if the signup was successful
             if (response.ok) {
+                
                 navigate('/'); // Navigate to the home page if signup is successful
             } else {
                 const errorData = await response.json();
-                setError(errorData.message || 'Signup failed. Please try again.');
+                console.log(errorData.error);
+                setError(errorData.error || 'Signup failed. Please try again.');
             }
         } catch (err) {
             setError('An error occurred. Please try again.');
@@ -86,7 +88,12 @@ const Signup = () => {
                             <div className="name__div">
                                 <div>
                                     <label>First Name</label>
-                                    <input type="text" required />
+                                    <input 
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        required
+                                    />
                                 </div>
                                 <div>
                                     <label>Last Name</label>

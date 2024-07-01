@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request, session
 from backend.models import User, TokenBlockList
 from backend.__init__ import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt, verify_jwt_in_request
 
 from helpers.utils import validate_email
 
@@ -142,8 +142,9 @@ def profile_page():
 
 
 @users.get('/logout', strict_slashes=False)
-@jwt_required()
+# @jwt_required()
 def logout():
+    verify_jwt_in_request()
     jwt = get_jwt()
     jti = jwt['jti']
 

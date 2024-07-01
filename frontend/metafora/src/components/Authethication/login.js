@@ -32,8 +32,10 @@ const Signup = () => {
             }
             console.log(data['tokens']['access'])
             localStorage.setItem("accessToken", data['tokens']['access'])
-            console.log(data['msg'])  
-            navigate('/');// Navigate to the home page if authenticated            
+            console.log(data['msg'])
+            localStorage.setItem('loggedIn', true);
+            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated     
+
             }
         )
         .catch(error => {
