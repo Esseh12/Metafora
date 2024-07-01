@@ -51,8 +51,8 @@ def add_company():
     """
     the endpoint to add a company
     the json expects the following args:
-        name, email, tagline, description, pic_url
-        whereby name and email are compulsory
+        name, email, unique_code, tagline, description, pic_url
+        whereby name and email, unique_code are compulsory
     """
     # if 'user' not in session:
     #     return jsonify({"error": "Not Authorized"}),401

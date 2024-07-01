@@ -59,7 +59,7 @@ const BusDetails = () => {
                 <p>Company: {journey_data.company}</p>
                 <p>Route: {journey_data.route}</p>
                 <p>Time: {journey_data.time}</p>
-                <p>Price: {journey_data.price}</p>
+                <p>Price: ₦{journey_data.price}</p>
                 {/* <p>Seats Available: 10{dummyBusDetails.seatsAvailable}</p> */}
                 <button onClick={handleSelectSeats}>Select Seats</button>
             </div>
