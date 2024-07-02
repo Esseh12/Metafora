@@ -33,11 +33,8 @@ const Signup = () => {
             console.log(data['tokens']['access'])
             localStorage.setItem("accessToken", data['tokens']['access'])
             console.log(data['msg'])
-            localStorage.setItem('loggedIn', true);
-            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated     
-
-            }
-        )
+            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated
+        })
         .catch(error => {
             // console.log(error)
             alert(`User not found: Please create an account.\n${error}.`);
