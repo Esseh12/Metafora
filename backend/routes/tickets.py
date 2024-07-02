@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from flask_jwt_extended import jwt_required
-from backend.models.ticket import Ticket
-from backend.__init__ import db
+from backend.models import Ticket
+from backend.models import User
+from backend.__init__ import db, email
 
 tickets = Blueprint('tickets', __name__)
 
@@ -60,11 +61,21 @@ def create_ticket():
     price = data.get('price')
 
     if not name or not passenger_id or not journey_id or not price:
-        return jsonify({"error": "Missing data [name, passenger_id, journey_id, price]"}), 400
-    
+        return jsonify({"status": 400, "error": "Missing data [name, passenger_id, journey_id, price]"}), 400
+    user = db.session.get(User, passenger_id)
+    if not user:
+        return jsonify({"status": 403, "error": "user does not exist"}), 403
+        
     ticket = Ticket(name, passenger_id, journey_id, price, seat_number)
+
+
     db.session.add(ticket)
     db.session.commit()
 
-    new_ticket = db.session.get(Ticket, ticket.id).to_dict() 
-    return jsonify({"data": new_ticket}), 201
+    ticket_obj = db.session.get(Ticket, ticket.id)    
+
+    new_ticket = ticket_obj.to_dict()
+
+    email.sendMail('meta@fora.com', ticket_obj.user.email, new_ticket) # to be uncommented for email service
+    
+    return jsonify({"status": 201, "data": "Ticket created and sent to email"}), 201

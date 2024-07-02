@@ -20,6 +20,7 @@ class Ticket(BaseModel, Base):
     code = Column('code', String)
 
     journey = relationship('Journey')
+    user = relationship('User', foreign_keys=[passenger_id])
 
 
     def __init__(self, name, passenger_id, journey_id, price, seat_number=None):

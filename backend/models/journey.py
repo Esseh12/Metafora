@@ -12,16 +12,11 @@ class Journey(BaseModel, Base):
     price = Column('price', Integer, default=0)
     time = Column('time', String(50), nullable=False)
     company_id = Column('company_id', ForeignKey('companies.id'), nullable=False)
-    # from_state = Column('from_state', String(100))
-    # from_lga = Column('from_lga', String(100))
-    # from_town = Column('from_town', String(100))
-
-    # to_state = Column('to_state', String(100))
-    # to_lga = Column('to_lga', String(100))
-    # to_town = Column('to_town', String(100))
-
+    
     from_park = relationship('Park', foreign_keys=[from_park_id], backref='journeys_from')
     to_park = relationship('Park', foreign_keys=[to_park_id], backref='to_journeys')
+
+    # company = relationship('Company', foreign_keys=[company_id])
 
     
     def __init__(self, name, from_park_id, to_park_id, price, time, company_id):

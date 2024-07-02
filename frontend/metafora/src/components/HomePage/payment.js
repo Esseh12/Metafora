@@ -9,6 +9,7 @@ const Payment = () => {
 
     const handlePayment = (event) => {
         event.preventDefault();
+        
         setPaymentStatus('processing');
 
         // Simulate payment processing

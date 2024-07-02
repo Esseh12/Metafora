@@ -59,4 +59,12 @@ POST /login
 GET /profile
     logged in user details returned
 
+
+POST /tickets/create
+        create a ticket and send to user email. 
+        json expects the following args:
+        name, passenger_id, journey_id, seat_number, price
+        whereby only seat_number is not compulsory
+
+
 remember to include the access tokens to the authorization bearer or header where neccesary

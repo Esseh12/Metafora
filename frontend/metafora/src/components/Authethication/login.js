@@ -14,11 +14,35 @@ const Signup = () => {
         e.preventDefault();
 
         // Dummy authentication logic
-        if (email === 'user@example.com' && password === 'password') {
-            navigate('/');// Navigate to the home page if authenticated
-        } else {
-            alert('User not found. Please create an account.');
-        }
+        // if (email === 'user@example.com' && password === 'password') {
+        //     navigate('/');// Navigate to the home page if authenticated
+        // } else {
+        //     alert('User not found. Please create an account.');
+        // }
+
+        fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data['status'] !== 200){
+                throw new Error(data['error']);
+            }
+            console.log(data['tokens']['access'])
+            localStorage.setItem("accessToken", data['tokens']['access'])
+            console.log(data['msg'])
+            localStorage.setItem('loggedIn', true);
+            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated     
+
+            }
+        )
+        .catch(error => {
+            // console.log(error)
+            alert(`User not found: Please create an account.\n${error}.`);
+            navigate('/login');// Navigate back to /login page if not authenticated    
+        });
     };
 
     return (
