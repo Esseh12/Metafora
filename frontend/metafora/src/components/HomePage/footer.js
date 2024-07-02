@@ -1,5 +1,8 @@
 import React from 'react';
 import '../../styles/footer.css';
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaSquareInstagram } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
     return (
@@ -27,13 +30,13 @@ const Footer = () => {
                             <img src="path/to/facebook.png" alt="Facebook" />
                         </a>
                         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/twitter.png" alt="Twitter" />
+                            <FaSquareXTwitter />
                         </a>
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/instagram.png" alt="Instagram" />
+                            <FaSquareInstagram />
                         </a>
                         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/linkedin.png" alt="LinkedIn" />
+                           <FaLinkedin />
                         </a>
                     </div>
                 </div>
