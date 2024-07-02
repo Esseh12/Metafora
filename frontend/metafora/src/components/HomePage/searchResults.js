@@ -44,7 +44,6 @@ const SearchResults = () => {
         setTimeout(() => {
             // navigate('/bus-details', { state: { company, leavingFrom, goingTo } });            
             navigate('/bus-details', { state: { journey_id } });
-
         }, 1000);
     };
 
@@ -57,13 +56,14 @@ const SearchResults = () => {
                     <p>Searching for buses...</p>
                 ) : (
                     <div className="results-container">
-                        {/* {dummyResults.map(result => ( */}
                         {query_data.map(result => (
                             <div key={result.id} className="result-item" onClick={() => handleCompanyClick(result.id)}>
                                 <p>Company: {result.company_info.name}</p>
                                 <p>Route: {result.name}</p>
                                 <p>Time: {result.time}</p>
-                                <p>Price: {result.price}</p>
+                                <p>Price: ₦{result.price}</p>
+                                <p>From: {result.from_park}</p>
+                                <p>To: {result.to_park}</p>
                             </div>
                         ))}
                         <p>{showEmptyQuery}</p>

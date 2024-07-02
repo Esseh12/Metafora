@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/seatSelection.css';
 
-const SeatSelection = ({ onClose }) => {
+const SeatSelection = ({ onClose, selectedBus }) => {
+    const navigate = useNavigate();
+    const [selectedSeat, setSelectedSeat] = useState(null);
+
     const seats = [
         { id: 1, status: 'available' },
         { id: 2, status: 'booked' },
@@ -17,13 +21,24 @@ const SeatSelection = ({ onClose }) => {
         { id: 12, status: 'available' },
     ];
 
+    const handleSeatClick = (seat) => {
+        if (seat.status === 'available') {
+            setSelectedSeat(seat.id);
+            navigate('/payment', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
+        }
+    };
+
     return (
         <div className="seat-selection-overlay">
             <div className="seat-selection-popup">
                 <h2>Select Seat(s)</h2>
                 <div className="seat-selection-grid">
                     {seats.map(seat => (
-                        <div key={seat.id} className={`seat ${seat.status}`}>
+                        <div
+                            key={seat.id}
+                            className={`seat ${seat.status} ${selectedSeat === seat.id ? 'selected' : ''}`}
+                            onClick={() => handleSeatClick(seat)}
+                        >
                             {seat.id}
                         </div>
                     ))}

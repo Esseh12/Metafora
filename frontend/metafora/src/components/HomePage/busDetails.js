@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import SeatSelection from './SeatSelection';
 import '../../styles/busDetails.css';
+import SeatSelection from './SeatSelection';
 
 const BusDetails = () => {
     const location = useLocation();
@@ -35,22 +35,26 @@ const BusDetails = () => {
 
     },[])
 
-    const dummyBusDetails = {
-        id: 1,
-        company: 'comapny',
-        route: `leavingFrom goingTo`,
-        time: '8:00 AM',
-        price: '₦5000',
-        seatsAvailable: 10,
-    };
+    // const dummyBusDetails = {
+    //     id: 1,
+    //     company: 'comapny',
+    //     route: `leavingFrom goingTo`,
+    //     time: '8:00 AM',
+    //     price: '₦5000',
+    //     seatsAvailable: 10,
+    // };
 
-    const handleSelectSeats = () => {
+    // const handleSelectSeats = () => {
+    // const { bus } = location.state || {};
+    // const [showSeatSelection, setShowSeatSelection] = useState(false);
+
+    const handleSelectSeat = () => {
         setShowSeatSelection(true);
     };
 
-    const handleCloseSeatSelection = () => {
-        setShowSeatSelection(false);
-    };
+    if (!journey_id) {
+        return <p>Loading...</p>; // or any other loading indicator
+    }
 
     return (
         <div className="bus-details-page">
@@ -60,12 +64,22 @@ const BusDetails = () => {
                 <p>Route: {journey_data.route}</p>
                 <p>Time: {journey_data.time}</p>
                 <p>Price: ₦{journey_data.price}</p>
+                <p>From: {journey_data.from_park}</p>
+                <p>To: {journey_data.to_park}</p>
                 {/* <p>Seats Available: 10{dummyBusDetails.seatsAvailable}</p> */}
-                <button onClick={handleSelectSeats}>Select Seats</button>
+                <button onClick={handleSelectSeat}>Select Seat</button>
+                {/* {showSeatSelection && <SeatSelection onClose={() => setShowSeatSelection(false)} selectedBus={bus} />} */}
+                {showSeatSelection && <SeatSelection onClose={() => setShowSeatSelection(false)} selectedBus={journey_data} />}
             </div>
-            {showSeatSelection && (
-                <SeatSelection onClose={handleCloseSeatSelection} />
-            )}
+            {/* <div className="bus-details">
+                <h2>{bus.company}</h2>
+                <p>{bus.route}</p>
+                <p>{bus.time}</p>
+                <p>{bus.price}</p>
+                
+                <button onClick={handleSelectSeat}>Select Seat</button>
+                {showSeatSelection && <SeatSelection onClose={() => setShowSeatSelection(false)} selectedBus={bus} />}
+            </div> */}
         </div>
     );
 };
