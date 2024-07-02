@@ -4,6 +4,10 @@
     overflow: hidden;
 }
 
+.companies-section h1{
+    text-align: center;
+    margin-bottom: 30px;
+}
 .companies-container {
     display: flex;
     justify-content: space-around;
