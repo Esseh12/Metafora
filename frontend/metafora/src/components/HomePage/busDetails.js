@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/busDetails.css';
-import SeatSelection from './seatSelection';
+import SeatSelection from './SeatSelection';
 
 const BusDetails = ({ bus }) => {
     const [showSeatSelection, setShowSeatSelection] = useState(false);
