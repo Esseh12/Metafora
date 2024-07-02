@@ -87,7 +87,9 @@ def get_journeys_based_on_query():
     if not from_state or not to_state:
         return jsonify({"status": 400, "error": "Missing data [from_state, to_state]"}), 400
     
-
+    from_state = from_state.strip()
+    to_state = to_state.strip()
+    
     journeys = db.session.query(Journey).join(Park, Journey.from_park_id == Park.id).filter(
         or_(
             and_(
