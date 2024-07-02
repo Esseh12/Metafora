@@ -62,8 +62,8 @@ const SearchResults = () => {
                                 <p>Route: {result.name}</p>
                                 <p>Time: {result.time}</p>
                                 <p>Price: ₦{result.price}</p>
-                                <p>From: {result.from_park}</p>
-                                <p>To: {result.to_park}</p>
+                                <p>From: {result.parks_info.from.address}</p>
+                                <p>To: {result.parks_info.to.address}</p>
                             </div>
                         ))}
                         <p>{showEmptyQuery}</p>
