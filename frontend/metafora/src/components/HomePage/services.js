@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../../styles/services.css';
 import { FaRegSmile, FaTruck, FaUsers } from 'react-icons/fa';
 
+
 const Services = () => {
     const [showPopup, setShowPopup] = useState(false);
 
@@ -21,18 +22,27 @@ const Services = () => {
                     <h2>Customers</h2>
                     <p>Our platform provides seamless transportation solutions for customers.</p>
                     <a href="#more" className="service-link">See More →</a>
+                    <div className="color-styling">
+                        {/* <h1>hello worls</h1> */}
+                    </div>
                 </div>
                 <div className="service-box">
                     <div className="icon-container"><FaUsers className="service-icon" /></div>
                     <h2>Partners</h2>
-                    <p>Join our network as a partner and grow your business with us.</p>
+                    <p>Join our network as a partner and grow your business with Metafora.</p>
                     <a href="#more" className="service-link">See More →</a>
+                    <div className="color-styling">
+                        {/* <h1>hello worls</h1> */}
+                    </div>
                 </div>
                 <div className="service-box" onClick={handleWaybillClick}>
                     <div className="icon-container"><FaTruck className="service-icon" /></div>
-                    <h2>Way Bill</h2>
-                    <p>Efficient waybill services for all your logistics needs.</p>
-                    <a  href="./companies.js" className="service-link">See More →</a>
+                    <h2>Delivery</h2>
+                    <p>Express courier delivered parcel and services for your shipping needs.</p>
+                    <a href="#more" className="service-link">See More →</a>
+                    <div className="color-styling">
+                        {/* <h1>hello worls</h1> */}
+                    </div>
                 </div>
             </div>
             {showPopup && (

@@ -21,13 +21,22 @@ const SeatSelection = ({ onClose, selectedBus }) => {
         { id: 12, status: 'available' },
     ];
 
+    const isLoggedIn = () => {
+        // Replace with actual authentication check
+        return !!localStorage.getItem('userToken');
+    };
+
     const handleSeatClick = (seat) => {
         if (seat.status === 'available') {
             setSelectedSeat(seat.id);
-            navigate('/payment', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
+            if (isLoggedIn()) {
+                navigate('/payment', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
+            } else {
+                navigate('/signup-signin', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
+            }
         }
     };
-
+    
     return (
         <div className="seat-selection-overlay">
             <div className="seat-selection-popup">
@@ -43,7 +52,7 @@ const SeatSelection = ({ onClose, selectedBus }) => {
                         </div>
                     ))}
                 </div>
-                <button onClick={onClose}>Close</button>
+                <button className="close-button" onClick={onClose}>Close</button>
             </div>
         </div>
     );

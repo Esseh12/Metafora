@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles/hero.css';
 import Loading from './loading'; // Import the Loading component
 
+
 const Hero = () => {
     const headings = ['Efficient', 'Reliable', 'Simplified'];
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -54,13 +55,13 @@ const Hero = () => {
     };
 
     const handleSearch = () => {
-        if (leavingFrom && goingTo) {
+        if (leavingFrom && goingTo && leavingOn) {
             setLoading(true); // Set loading state to true
             setTimeout(() => {
                 navigate('/search-results', { state: { leavingFrom, goingTo } });
-            }, 1000); // Delay to simulate loading
+            }, 2500); // Delay to simulate loading
         } else {
-            alert('Please enter both Leaving from and Going to fields.');
+            alert('Please enter all fields.');
         }
     };
 
