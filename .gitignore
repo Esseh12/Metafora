@@ -1,5 +1,6 @@
+.env
 __pycache__
 backend/__pycache__
 backend/models/__pycache__
 backend/routes/__pycache__
-frontend/metafora/node_modules
+migrations/__pycache__

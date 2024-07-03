@@ -1,10 +1,12 @@
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request
 from markupsafe import escape
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import get_jwt, jwt_required
 
-from backend.models.company import Company
+from backend.models import Company
 from backend.__init__ import db
+
+from helpers.utils import validate_email
 
 companies = Blueprint('companies', __name__)
 
@@ -18,7 +20,7 @@ def get_all_companies():
     companies = db.session.query(Company).all()
     serializable_companies = [company.to_dict() for company in companies]
     data = {"companies": serializable_companies}
-    response = jsonify({"data": data})
+    response = jsonify({"status": 200, "data": data})
     return response
 
 
@@ -37,9 +39,9 @@ def get_company(id):
             parks = [cp.to_dict() for cp in company.parks]
             serializable_company.update({"parks" : parks})
 
-        return jsonify({"data": serializable_company})
+        return jsonify({"status": 200, "data": serializable_company})
     else:
-        return jsonify({"msg": "Company Not Found"}), 404
+        return jsonify({"status": 404, "error": "Company Not Found"}), 404
 
 
 
@@ -49,8 +51,8 @@ def add_company():
     """
     the endpoint to add a company
     the json expects the following args:
-        name, email, tagline, description, pic_url
-        whereby name and email are compulsory
+        name, email, unique_code, tagline, description, pic_url
+        whereby name and email, unique_code are compulsory
     """
     # if 'user' not in session:
     #     return jsonify({"error": "Not Authorized"}),401
@@ -60,7 +62,7 @@ def add_company():
     #     return jsonify({"error": "Not Authorized, must be an admin"}),401
     
     if get_jwt()['sub']['role'] != 'admin':
-        return jsonify({"error": "Not Authorized, must be an admin"}),401
+        return jsonify({"status": 401, "error": "Not Authorized, must be an admin"}),401
 
 
     data = request.json
@@ -73,7 +75,11 @@ def add_company():
     pic_url = data.get('pic_url')
 
     if not name or not email or not unique_code:
-        return jsonify({"error": "Missing data [name || email || unique_code]"}), 400
+        return jsonify({"status": 400, "error": "Missing data [name || email || unique_code]"}), 400
+    
+
+    if not validate_email(email):
+        return jsonify({"status": 400, "error": "invalid email"}), 400
     
     try:
         comp = Company(
@@ -83,10 +89,10 @@ def add_company():
         db.session.add(comp)
         db.session.commit()
     except IntegrityError:
-        return jsonify({"error": "email exists"}), 400
+        return jsonify({"status": 400, "error": "email exists"}), 400
 
     new_comp = db.session.get(Company, comp.id).to_dict() 
-    return jsonify({"data": new_comp}), 201
+    return jsonify({"status": 201, "data": new_comp}), 201
 
 
 @companies.put('/company/<company_id>', strict_slashes=False)
@@ -99,11 +105,11 @@ def update_company(company_id):
         tagline, 
     """
     if get_jwt()['sub']['role'] != 'admin':
-        return jsonify({"error": "Not Authorized, must be an admin"}),401
+        return jsonify({"status": 401, "error": "Not Authorized, must be an admin"}),401
 
     comp = db.session.get(Company, escape(company_id))
     if not comp:
-        return jsonify({"error": "Not found"}), 404
+        return jsonify({"status": 404, "error": "Not found"}), 404
     
     data = request.json
     attribute = ["name", "tagline", "description", "pic_url"]
@@ -119,7 +125,7 @@ def update_company(company_id):
     new_data = {
         "Company": new_comp
     }
-    return jsonify({"data": new_data}), 201
+    return jsonify({"status": 201, "data": new_data}), 201
 
 
 @companies.delete("/company/<company_id>", strict_slashes=False)
@@ -131,12 +137,12 @@ def delete_company(company_id):
         company_id
     """
     if get_jwt()['sub']['role'] != 'admin':
-        return jsonify({"error": "Not Authorized, must be an admin"}),401
+        return jsonify({"status": 401, "error": "Not Authorized, must be an admin"}),401
 
     comp = db.session.get(Company, escape(company_id))
     if not comp:
-        return jsonify({"error": "Not found"}), 404
+        return jsonify({"status": 404, "error": "Not found"}), 404
     
     db.session.delete(comp)
     db.session.commit()
-    return jsonify({"msg": "Deleted Successfully"})
+    return jsonify({"status": 200, "msg": "Deleted Successfully"})

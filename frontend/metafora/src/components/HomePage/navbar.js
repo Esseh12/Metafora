@@ -1,14 +1,34 @@
-import { useState } from 'react';
 import { slide as Menu } from 'react-burger-menu';
-import logo from '../images/logo-icon.ico';
-import Modal from './modal';
-import '../styles/navbar.css';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../images/logo.png';
+import '../../styles/navbar.css';
 
 const Navbar = () => {
-    const [modalOpen, setModalOpen] = useState(false);
-    const handleOpenModal = () => setModalOpen(true);
-    const handleCloseModal = () => setModalOpen(false);
 
+
+    const navigate = useNavigate();
+
+    // function logout(){
+    //     fetch('http://127.0.0.1:5000/logout', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    //         }
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         // localStorage.setItem('loggedIn', false)
+    //         setLoggedInState(false);
+    //     });  
+    //     // localStorage.setItem('loggedIn', false);
+
+    //     setLoggedInState(false);      
+    // }
+    // useEffect(()=>{
+    //     setLoggedInState(loggedInState);
+    // }, [loggedInState]);
+
+    
     return (
         <>
             <section className="navbar-section">
@@ -25,7 +45,7 @@ const Navbar = () => {
                                     <li className="menu-item navbar-item"><a href="#aboutPage-section" className="navbar-link">About</a></li>
                                     <li className="menu-item navbar-item"><a href="#services-section" className="navbar-link">Services</a></li>
                                     <li className="menu-item navbar-item"><a href="#companies-section" className="navbar-link">Companies</a></li>
-                                    <button className="menu-item navbar-button" onClick={handleOpenModal}>Login</button>
+                                    <button className="menu-item navbar-button" onClick={() => navigate('/login')}>login</button>                                    
                                 </ul>
                             </div>
                             <div className="mobile-menu">
@@ -34,14 +54,13 @@ const Navbar = () => {
                                     <a href="#aboutPage-section" className="menu-item">About</a>
                                     <a href="#services-section" className="menu-item">Services</a>
                                     <a href="#companies-section" className="menu-item">Companies</a>
-                                    <button className="menu-item navbar-button" onClick={handleOpenModal}>Login</button>
+                                    <button className="menu-item navbar-button" onClick={() => navigate('/login')}>login</button>
                                 </Menu>
                             </div>
                         </div>
                     </nav>
                 </div>
             </section>
-            <Modal show={modalOpen} handleClose={handleCloseModal} />
         </>
     );
 }

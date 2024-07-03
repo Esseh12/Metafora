@@ -1,5 +1,12 @@
 import React from 'react';
-import '../styles/footer.css';
+import '../../styles/footer.css';
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaSquareInstagram } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaFacebookSquare } from "react-icons/fa";
+import playStoreImg from '../../images/PlaystoreImg.png';
+import appleStoreImg from '../../images/applePlayStoreImg.png';
+
 
 const Footer = () => {
     return (
@@ -10,30 +17,30 @@ const Footer = () => {
                     <p>Your go-to platform for seamless transportation solutions.</p>
                 </div>
                 <div className="footer-section">
-                    <h3>Download Our App</h3>
+                    <h3 className="app-links__h3">Download Our App</h3>
                     <div className="app-links">
                         <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/playstore.png" alt="Play Store" />
+                           <img src={playStoreImg} alt="Download from Google play store" />
                         </a>
                         <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/appstore.png" alt="App Store" />
+                            <img src={appleStoreImg} alt="Download from app store" />
                         </a>
                     </div>
                 </div>
                 <div className="footer-section">
-                    <h3>Follow Us</h3>
+                    <h3 className="social-media-h3">Follow Us</h3>
                     <div className="social-media-links">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/facebook.png" alt="Facebook" />
+                           <FaFacebookSquare  className="social-media-icons"/>
                         </a>
                         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/twitter.png" alt="Twitter" />
+                            <FaSquareXTwitter className="social-media-icons"/>
                         </a>
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/instagram.png" alt="Instagram" />
+                            <FaSquareInstagram className="social-media-icons"/>
                         </a>
                         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                            <img src="path/to/linkedin.png" alt="LinkedIn" />
+                           <FaLinkedin className="social-media-icons"/>
                         </a>
                     </div>
                 </div>

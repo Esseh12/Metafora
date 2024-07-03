@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/companies.css';
+import '../../styles/companies.css';
 
 const Companies = () => {
     // for listing banner
@@ -18,8 +18,11 @@ const Companies = () => {
     // Future implementation to fetch data from an API
     useEffect(() => {
         fetch('http://127.0.0.1:5000/companies')
+        // fetch('https://metafora.pythonanywhere.com/companies')
             .then(response => response.json())
-            .then(data => setCompanies(data['data']['companies']))
+            .then(data => {
+                setCompanies(data['data']['companies']);
+            })
             .catch(error => console.error('Error fetching companies:', error));        
     }, []);
 
@@ -46,6 +49,7 @@ const Companies = () => {
                     {companies.map(company => (
                         <div key={company.id} className="company-box">
                             <h2>{company.name}</h2>
+                            {/* <div><img src={company.pic_url}></img></div> */}
                             <p>{company.description}</p>
                             <blockquote>{company.tagline}</blockquote>
                             <a href={company.unique_code} className="company-link">Visit Company →</a>

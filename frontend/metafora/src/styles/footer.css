@@ -43,17 +43,24 @@
     color: #fff;
 }
 
-.app-links img,
-.social-media-links img {
-    width: 40px;
-    margin: 0 10px;
+.app-links__h3,
+.social-media-h3 {
+    margin-bottom: 10px;
+}
+.app-links img{
+    width: 10rem;
     transition: transform 0.3s ease;
+}
+.social-media-icons{
+    font-size: 2.2rem;
+    color: black;
 }
 
 .app-links img:hover,
 .social-media-links img:hover {
     transform: scale(1.1);
 }
+
 
 .footer-bottom {
     text-align: center;

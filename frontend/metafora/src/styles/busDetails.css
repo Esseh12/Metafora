@@ -1,0 +1,18 @@
+.bus-details-page {
+    padding: 20px;
+    text-align: center;
+    height: 1200vh;
+}
+
+.bus-details {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}

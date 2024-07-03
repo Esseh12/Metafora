@@ -4,8 +4,8 @@ from sqlalchemy import or_, and_
 from flask_jwt_extended import jwt_required, get_jwt
 
 
-from backend.models.journey import Journey
-from backend.models.park import Park
+from backend.models import Journey
+from backend.models import Park
 
 from backend.__init__ import db
 
@@ -14,6 +14,7 @@ journeys = Blueprint('journeys', __name__)
 
 
 @journeys.post('/add-journey', strict_slashes=False)
+@jwt_required()
 def add_journey():
     """
     the endpoint to add a journey
@@ -21,6 +22,10 @@ def add_journey():
         name, from_park_id, to_park_id, price, time (morning || noon || night), company_id
         whereby [name, from_park_id, to_park_id, time, company_id] are compulsory
     """
+    claims = get_jwt()
+    
+    if claims['sub']['role'] == 'user':
+        return jsonify({"status": 400, "error": "Not AUthorized"}), 400
     data = request.json
 
     name = data.get('name')
@@ -32,10 +37,10 @@ def add_journey():
 
 
     if not name or not from_park_id or not to_park_id or not time or not company_id:
-        return jsonify({"msg": "missing data [name, from_park_id, to_park_id, time, company_id]"}), 400
+        return jsonify({"status": 401, "error": "missing data [name, from_park_id, to_park_id, time, company_id]"}), 401
 
     if time not in ["morning", "noon", "night"]:
-        return jsonify({"msg": "time must be morning || noon || night"}), 400
+        return jsonify({"status": 401, "error": "time must be morning || noon || night"}), 401
 
     journey = Journey(name, from_park_id, to_park_id, price, time, company_id)
 
@@ -43,7 +48,7 @@ def add_journey():
     db.session.commit()
 
     new_journey = db.session.get(Journey, journey.id).to_dict()
-    return jsonify({"data": new_journey}), 201
+    return jsonify({"status": 201, "data": new_journey}), 201
 
 @journeys.get("/journey/<journey_id>")
 def get_journey(journey_id):
@@ -52,10 +57,17 @@ def get_journey(journey_id):
     """
     journey = db.session.get(Journey, escape(journey_id))
     if journey:
-        response = journey.to_dict()
-        return jsonify({"data": response})
+        response = {
+            "company": journey.company.name,
+            "route": journey.name,
+            "time": journey.time,
+            "price": journey.price,
+            "from_park": journey.from_park.address,
+            "to_park": journey.to_park.address
+        }
+        return jsonify({"status": 200, "data": response})
     else:
-        return jsonify({"msg": "Journey Not Found"}), 404
+        return jsonify({"status": 404, "error": "Journey Not Found"}), 404
 
 
 @journeys.get("/journeys_search")
@@ -65,17 +77,19 @@ def get_journeys_based_on_query():
     json expects [from_state, from_lga, from_town, to_state]
     where only [from_state, to_state] are compulsory
     """
-    data = request.json
+    data = request.args
 
     from_state = data.get('from_state')
-    from_lga = data.get('from_lga', 'nothing')
-    from_town = data.get('from_town', 'nothing')
+    from_lga = data.get('from_lga', 'null')
+    from_town = data.get('from_town', 'null')
     to_state = data.get('to_state')
 
     if not from_state or not to_state:
-        return jsonify({"error": "Missing data [from_state, to_state]"}), 400
+        return jsonify({"status": 400, "error": "Missing data [from_state, to_state]"}), 400
     
-
+    from_state = from_state.strip()
+    to_state = to_state.strip()
+    
     journeys = db.session.query(Journey).join(Park, Journey.from_park_id == Park.id).filter(
         or_(
             and_(
@@ -93,7 +107,7 @@ def get_journeys_based_on_query():
         )
     ).distinct().all()
     if not journeys:
-        return {"msg": "No journey for your current location at the moment"}
+        return {"status": 400, "error": "No journey for your current location at the moment"}
 
     all_journs = []
 
@@ -129,10 +143,11 @@ def get_journeys_based_on_query():
 
         all_journs.append(journ_dict)
         
-    return jsonify({"data": all_journs})
+    return jsonify({"status": 200, "data": all_journs})
 
 
 @journeys.put("/journey/<journey_id>")
+@jwt_required()
 def update_journey(journey_id):
     """
     Updates the details about a journey
@@ -152,7 +167,7 @@ def update_journey(journey_id):
     new_data = {
         "Journey": new_journey
     }
-    return jsonify({"data": new_data}), 201
+    return jsonify({"status": 201, "data": new_data}), 201
 
 
 @journeys.delete('/journey/<journey_id>')
@@ -164,11 +179,11 @@ def delete_journey(journey_id):
     claims = get_jwt()
     
     if claims['sub']['role'] == 'user':
-        return jsonify({"error": "Not AUthorized"}), 400
+        return jsonify({"status": 400, "error": "Not AUthorized"}), 400
     journey = db.session.get(Journey, escape(journey_id))
     if not journey:
-        return jsonify({"error": "Not found"}), 404
+        return jsonify({"status": 404, "error": "Not found"}), 404
     
     db.session.delete(journey)
     db.session.commit()
-    return jsonify({"msg": "Journey successfully deleted"})
+    return jsonify({"status": 200, "msg": "Journey successfully deleted"})
