@@ -132,6 +132,6 @@ def get_all_parks_state():
     
     states = [park.state for park in parks]
     unique_states = list(set(states))
-    print(states)
+    # print(states)
 
     return jsonify({"status": 200, "data": unique_states})
