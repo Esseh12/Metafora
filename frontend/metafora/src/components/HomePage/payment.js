@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/payment.css';
+
+
+
 
 const Payment = () => {
     const location = useLocation();
     const { selectedSeat, busDetails } = location.state || {};
     const [paymentStatus, setPaymentStatus] = useState('pending');
+    const navigate = useNavigate();
+
 
     const handlePayment = (event) => {
         event.preventDefault();
         const dt = {...busDetails, user: localStorage.getItem('userID')}
         
         setPaymentStatus('processing');
-        console.log("########now######")
-        console.log(dt);
-        // console.log(selectedSeat);
-        // console.log(busDetails);
-        console.log("##############")
 
         const token = localStorage.getItem('accessToken');
         
@@ -35,7 +35,7 @@ const Payment = () => {
         .then(response => response.json())
         .then(data => {
             if (data['status'] !== 201){
-                throw new Error("something went wrong o!");
+                throw new Error(`${data['msg']}`);
             } else {
                 setTimeout(() => {
                     setPaymentStatus('confirmed');
@@ -45,27 +45,13 @@ const Payment = () => {
         .catch(error => {
             alert(`${error}.`);
         });
-
-
-        // const obj = {
-        //     company: "GIG Motors",
-        //     from_park: "5 somethign some akoka",
-        //     price: 5000,
-        //     route: "lagos to Oyo",
-        //     time:"morning",
-        //     to_park:"5 somethign some oyo"
-        // }
-
-
-
-
-
-        // Simulate payment processing
         
     };
 
     const handleConfirmationClose = () => {
         setPaymentStatus('pending');
+        navigate('/');
+
     };
 
     return (
@@ -77,14 +63,14 @@ const Payment = () => {
                         <p>Selected Seat: {selectedSeat}</p>
                         <p>Bus Company: {busDetails.company}</p>
                         <p>Total Price: ₦{busDetails.price}</p>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="name">Name</label>
                             <input type="text" id="name" name="name" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
                             <input type="email" id="email" name="email" required />
-                        </div>
+                        </div> */}
                         <div className="form-group">
                             <label htmlFor="cardNumber">Card Number</label>
                             <input type="text" id="cardNumber" name="cardNumber" required />

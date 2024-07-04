@@ -12,7 +12,7 @@ const Signup = () => {
 
     const location = useLocation();
     const { selectedSeat, busDetails } = location.state;
-    
+  
 
     const handleLogin = async (e) => {
         e.preventDefault();

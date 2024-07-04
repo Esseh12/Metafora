@@ -145,7 +145,7 @@ def profile_page():
 
 
 @users.get('/logout', strict_slashes=False)
-# @jwt_required()
+@jwt_required()
 def logout():
     verify_jwt_in_request()
     jwt = get_jwt()

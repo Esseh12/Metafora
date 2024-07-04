@@ -11,7 +11,6 @@ import Footer from '../HomePage/footer';
 
 
 const Homepage = () => {
-
     return (
         <>
             <Navbar />
