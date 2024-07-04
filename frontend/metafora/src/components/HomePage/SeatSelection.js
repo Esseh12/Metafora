@@ -21,11 +21,10 @@ const SeatSelection = ({ onClose, selectedBus }) => {
         { id: 12, status: 'available' },
     ];
 
-    // const isLoggedIn = () => {
-    //     // Replace with actual authentication check
-    //     const LoggedIn = localStorage.getItem('loggedIn');
-    //     return LoggedIn;
-    // };
+    const isLoggedIn = () => {
+        // Replace with actual authentication check
+        return false;
+    };
 
     const handleSeatClick = (seat) => {
         if (seat.status === 'available') {

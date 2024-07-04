@@ -7,6 +7,9 @@ import Login from './components/Authethication/login';
 import Signup from './components/Authethication/signup';
 import BusDetails from './components/HomePage/busDetails';
 import Payment from './components/HomePage/payment';
+import PaymentSignup from './components/Authethication/login';
+
+
 function App() {
   return (
     <>
@@ -20,6 +23,7 @@ function App() {
           <Route path="/search-results" element={<SearchResults />} />
           <Route path="/bus-details" element={<BusDetails />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/signup-signin" element={<PaymentSignup/>} />
           </Routes>
         </Router>
     </>
