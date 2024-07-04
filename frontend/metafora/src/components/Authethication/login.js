@@ -29,11 +29,14 @@ const Signup = () => {
         .then(data => {
             if (data['status'] !== 200){
                 throw new Error(data['error']);
+            } else {
+                console.log(data['tokens']['access'])
+                localStorage.setItem("accessToken", data['tokens']['access']);
+                localStorage.setItem('loggedIn', true);
+                console.log(data['msg']);
+                navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated
             }
-            console.log(data['tokens']['access'])
-            localStorage.setItem("accessToken", data['tokens']['access'])
-            console.log(data['msg'])
-            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated
+            
         })
         .catch(error => {
             // console.log(error)

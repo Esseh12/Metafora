@@ -21,17 +21,20 @@ const SeatSelection = ({ onClose, selectedBus }) => {
         { id: 12, status: 'available' },
     ];
 
-    const isLoggedIn = () => {
-        // Replace with actual authentication check
-        return !!localStorage.getItem('userToken');
-    };
+    // const isLoggedIn = () => {
+    //     // Replace with actual authentication check
+    //     const LoggedIn = localStorage.getItem('loggedIn');
+    //     return LoggedIn;
+    // };
 
     const handleSeatClick = (seat) => {
         if (seat.status === 'available') {
             setSelectedSeat(seat.id);
-            if (isLoggedIn()) {
+
+            if (localStorage.getItem('loggedIn') === true) {
                 navigate('/payment', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
             } else {
+                console.log("notlogged in ooooo");
                 navigate('/signup-signin', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
             }
         }
