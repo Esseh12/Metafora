@@ -45,7 +45,7 @@ const Navbar = () => {
                                     <li className="menu-item navbar-item"><a href="#aboutPage-section" className="navbar-link">About</a></li>
                                     <li className="menu-item navbar-item"><a href="#services-section" className="navbar-link">Services</a></li>
                                     <li className="menu-item navbar-item"><a href="#companies-section" className="navbar-link">Companies</a></li>
-                                    <button className="menu-item navbar-button" onClick={() => navigate('/login')}>login</button>                                    
+                                    {/* <button className="menu-item navbar-button" onClick={() => navigate('/login')}>login</button>                                     */}
                                 </ul>
                             </div>
                             <div className="mobile-menu">

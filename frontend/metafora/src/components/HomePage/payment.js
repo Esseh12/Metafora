@@ -9,13 +9,59 @@ const Payment = () => {
 
     const handlePayment = (event) => {
         event.preventDefault();
+        const dt = {...busDetails, user: localStorage.getItem('userID')}
         
         setPaymentStatus('processing');
+        console.log("########now######")
+        console.log(dt);
+        // console.log(selectedSeat);
+        // console.log(busDetails);
+        console.log("##############")
+
+        const token = localStorage.getItem('accessToken');
+        
+        
+
+
+        fetch('http://127.0.0.1:5000/tickets/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name: "Cofounder", passenger_id: dt.user, journey_id: dt.journey_id, price: dt.price, seat_number: selectedSeat })
+
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data['status'] !== 201){
+                throw new Error("something went wrong o!");
+            } else {
+                setTimeout(() => {
+                    setPaymentStatus('confirmed');
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            alert(`${error}.`);
+        });
+
+
+        // const obj = {
+        //     company: "GIG Motors",
+        //     from_park: "5 somethign some akoka",
+        //     price: 5000,
+        //     route: "lagos to Oyo",
+        //     time:"morning",
+        //     to_park:"5 somethign some oyo"
+        // }
+
+
+
+
 
         // Simulate payment processing
-        setTimeout(() => {
-            setPaymentStatus('confirmed');
-        }, 2000);
+        
     };
 
     const handleConfirmationClose = () => {
