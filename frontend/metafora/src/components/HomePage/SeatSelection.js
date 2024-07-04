@@ -23,7 +23,7 @@ const SeatSelection = ({ onClose, selectedBus }) => {
 
     const isLoggedIn = () => {
         // Replace with actual authentication check
-        return !!localStorage.getItem('userToken');
+        return false;
     };
 
     const handleSeatClick = (seat) => {

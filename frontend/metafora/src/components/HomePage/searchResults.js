@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../HomePage/navbar';
 import Footer from '../HomePage/footer';
+import { IoBusOutline } from "react-icons/io5";
+import { FaRoute } from "react-icons/fa";
+import { AiOutlineFieldTime } from "react-icons/ai";
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/searchResults.css';
 
@@ -58,12 +61,12 @@ const SearchResults = () => {
                     <div className="results-container">
                         {query_data.map(result => (
                             <div key={result.id} className="result-item" onClick={() => handleCompanyClick(result.id)}>
-                                <p>Company: {result.company_info.name}</p>
-                                <p>Route: {result.name}</p>
-                                <p>Time: {result.time}</p>
-                                <p>Price: ₦{result.price}</p>
-                                <p>From: {result.parks_info.from.address}</p>
-                                <p>To: {result.parks_info.to.address}</p>
+                                <p><span><IoBusOutline /></span>Company: {result.company_info.name}</p>
+                                <p><span><FaRoute /></span>Route: {result.name}</p>
+                                <p><span><AiOutlineFieldTime /></span>Time: {result.time}</p>
+                                <p><span><AiOutlineFieldTime /></span>Price: ₦{result.price}</p>
+                                <p><span><IoBusOutline /></span>From: {result.parks_info.from.address}</p>
+                                <p><span><IoBusOutline /></span>To: {result.parks_info.to.address}</p>
                             </div>
                         ))}
                         <p>{showEmptyQuery}</p>

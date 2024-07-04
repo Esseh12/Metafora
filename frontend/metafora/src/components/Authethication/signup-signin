@@ -4,7 +4,7 @@ import '../../styles/login.css';
 import Logo from '../../images/logo.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const Signup = () => {
+const PaymentSignup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // state to toggle password visibility
@@ -13,12 +13,12 @@ const Signup = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        // Dummy authentication logic
-        // if (email === 'user@example.com' && password === 'password') {
-        //     navigate('/');// Navigate to the home page if authenticated
-        // } else {
+        //  Dummy authentication logic
+        //  if (email === 'Gbenmoese788@gmail.com' && password === 'CoFounder01') {
+        //      navigate('/payment');Navigate to the home page if authenticated
+        //  } else {
         //     alert('User not found. Please create an account.');
-        // }
+        //  }
 
         fetch('http://127.0.0.1:5000/login', {
             method: 'POST',
@@ -33,15 +33,15 @@ const Signup = () => {
             console.log(data['tokens']['access'])
             localStorage.setItem("accessToken", data['tokens']['access'])
             console.log(data['msg'])
-            alert("logged in succcessffullt");
-            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated
+            alert("logged in succcessffullt")
+            navigate('/payment', {state:{loggedIn: true}}); //naviaget to payment 
         })
         .catch(error => {
-            // console.log(error)
+            console.log(error)
             alert(`User not found: Please create an account.\n${error}.`);
-            navigate('/login');// Navigate back to /login page if not authenticated    
+            navigate('/signup-signin');    // Navigate back to /login page if not authenticated    
         });
-    };
+     };
 
     return (
         <div className="login-page" >
@@ -101,6 +101,5 @@ const Signup = () => {
         </div>
         
     );
-};
-
-export default Signup;
+}
+export default PaymentSignup;
