@@ -26,8 +26,7 @@ const Hero = () => {
     }, [headings.length]);
 
     useEffect(()=>{
-        fetch('http://127.0.0.1:5000/parks')
-        // fetch('https://metafora.pythonanywhere.com/companies')
+        fetch('https://metafora.pythonanywhere.com/parks')
             .then(response => response.json())
             .then(data => {
                 setRoutes(data['data']);

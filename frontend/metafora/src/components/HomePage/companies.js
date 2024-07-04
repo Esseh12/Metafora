@@ -17,8 +17,7 @@ const Companies = () => {
 
     // Future implementation to fetch data from an API
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/companies')
-        // fetch('https://metafora.pythonanywhere.com/companies')
+        fetch('https://metafora.pythonanywhere.com/companies')
             .then(response => response.json())
             .then(data => {
                 setCompanies(data['data']['companies']);
