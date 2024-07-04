@@ -5,6 +5,7 @@ import '../../styles/seatSelection.css';
 const SeatSelection = ({ onClose, selectedBus }) => {
     const navigate = useNavigate();
     const [selectedSeat, setSelectedSeat] = useState(null);
+    const [logged_in, setlogged_in] = useState(localStorage.getItem('loggedIn'));
 
     const seats = [
         { id: 1, status: 'available' },
@@ -21,20 +22,24 @@ const SeatSelection = ({ onClose, selectedBus }) => {
         { id: 12, status: 'available' },
     ];
 
-    const isLoggedIn = () => {
-        // Replace with actual authentication check
-        return false;
-    };
+    // const isLoggedIn = () => {
+    //     // Replace with actual authentication check
+    //     return false;
+    // };
 
     const handleSeatClick = (seat) => {
         if (seat.status === 'available') {
             setSelectedSeat(seat.id);
 
-            if (localStorage.getItem('loggedIn') === true) {
+            if (logged_in === '1') {
+                console.log('it is true, before payment');
                 navigate('/payment', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
             } else {
+                setlogged_in('0');
+                console.log('it is false (suppose), before signup-signin');
+                console.log(logged_in);
                 console.log("notlogged in ooooo");
-                navigate('/signup-signin', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
+                navigate('/login', { state: { selectedSeat: seat.id, busDetails: selectedBus } });
             }
         }
     };

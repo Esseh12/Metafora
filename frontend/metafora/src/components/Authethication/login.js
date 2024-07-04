@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../../styles/login.css';
 import Logo from '../../images/logo.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -9,6 +9,10 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // state to toggle password visibility
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const { selectedSeat, busDetails } = location.state;
+    
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -32,20 +36,20 @@ const Signup = () => {
             } else {
                 console.log(data['tokens']['access'])
                 localStorage.setItem("accessToken", data['tokens']['access']);
-                localStorage.setItem('loggedIn', true);
-                console.log(data['msg']);
-                navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated
+                localStorage.setItem('loggedIn', '1');
+                // console.log(data['msg']);
+                alert("logged in succcessffullt");
+                console.log(`User is: ${data['userId']}`);
+                localStorage.setItem('userID', data['userId']);
+                // const busDetailss = {...busDetails, userId: data['userId']};
+
+                navigate('/payment', {state:{selectedSeat, busDetails}});// Navigate to the home page if authenticated
             }
-            console.log(data['tokens']['access'])
-            localStorage.setItem("accessToken", data['tokens']['access'])
-            console.log(data['msg'])
-            alert("logged in succcessffullt");
-            navigate('/', {state:{loggedIn: true}});// Navigate to the home page if authenticated
         })
         .catch(error => {
             // console.log(error)
             alert(`User not found: Please create an account.\n${error}.`);
-            navigate('/login');// Navigate back to /login page if not authenticated    
+            // navigate('/login');// Navigate back to /login page if not authenticated    
         });
     };
 
