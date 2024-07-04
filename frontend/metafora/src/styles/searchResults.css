@@ -29,7 +29,78 @@
 .result-item p {
     margin: 5px 0;
 }
-
+.company__name__container{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+}
+.company__name__container h3{
+    margin-top: 5px;
+}
+.company__route__container{
+    margin-top: 15px;
+}
+.company__route__container p{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.company__route__subcontainer{
+    display: flex;
+}
+.company__route__subcontainer p{
+    font-weight: 500;
+    font-size: 1rem;
+    margin-left: 5px;
+}
+.company__route__container span{
+    font-size: 1rem;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.company__time__container{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.company__time__subcontainer{
+    display: flex;
+    margin-top: 10px;
+}
+.company__time__subcontainer p{
+    margin: 0px;
+    padding: 0px;
+    font-weight: 500;
+    margin-left: 5px;
+}
+.company__time__subcontainer span{
+    margin-top: 3px;
+}
+.radio__button{
+    color: var(--hoverBlue);
+}
+.dot{
+    display: block;
+    padding: 0px;
+    font-size: 0.5rem;
+    margin-left: 4px;
+}
+.star{
+    margin-left: 20px;
+}
+.stars{
+    color: #fc8221;
+}
+.price{
+    color: var(--hoverBlue);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+.select__button{
+    width: 6rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 /* Media Queries */
 @media (max-width: 768px) {
     .result-item {
@@ -40,5 +111,8 @@
 @media (max-width: 480px) {
     .result-item {
         width: 95%;
+    }
+    .company__time__subcontainer{
+        margin-top: 1.6rem;
     }
 }
