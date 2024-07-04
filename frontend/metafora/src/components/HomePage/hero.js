@@ -59,7 +59,7 @@ const Hero = () => {
             setLoading(true); // Set loading state to true
             setTimeout(() => {
                 navigate('/search-results', { state: { leavingFrom, goingTo } });
-            }, 1000); // Delay to simulate loading
+            }, 500); // Delay to simulate loading
         } else {
             alert('Please enter all fields.');
         }

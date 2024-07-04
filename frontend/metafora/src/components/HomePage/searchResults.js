@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../HomePage/navbar';
 import Footer from '../HomePage/footer';
-import { IoBusOutline } from "react-icons/io5";
-import { FaRoute } from "react-icons/fa";
-import { AiOutlineFieldTime } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { HiClock } from "react-icons/hi";
+import { RiRadioButtonFill } from "react-icons/ri";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { GoDotFill } from "react-icons/go";
+
+
 import '../../styles/searchResults.css';
 
 const SearchResults = () => {
@@ -60,13 +64,30 @@ const SearchResults = () => {
                 ) : (
                     <div className="results-container">
                         {query_data.map(result => (
-                            <div key={result.id} className="result-item" onClick={() => handleCompanyClick(result.id)}>
-                                <p><span><IoBusOutline /></span>Company: {result.company_info.name}</p>
-                                <p><span><FaRoute /></span>Route: {result.name}</p>
-                                <p><span><AiOutlineFieldTime /></span>Time: {result.time}</p>
-                                <p><span><AiOutlineFieldTime /></span>Price: ₦{result.price}</p>
-                                <p><span><IoBusOutline /></span>From: {result.parks_info.from.address}</p>
-                                <p><span><IoBusOutline /></span>To: {result.parks_info.to.address}</p>
+                            <div key={result.id} className="result-item">
+                                <div className="company__name__container">
+                                    <h3>{result.company_info.name}</h3>
+                                    <p className="price">₦{result.price}</p>
+                                </div>
+                                <div className="company__route__container">
+                                    <div className="company__route__subcontainer"><span className='radio__button'><RiRadioButtonFill /></span><p>{result.parks_info.from.address}</p></div>
+                                    <GoDotFill className="dot"/>
+                                    <GoDotFill className="dot"/>
+                                    <div className="company__route__subcontainer"><span><FaLocationDot /></span><p>{result.parks_info.to.address}</p></div>
+                                </div>
+                                {/* <p><span><FaRoute /></span>Route: {result.name}</p> */}
+                                <div className="company__time__container">
+                                    <div className="company__time__subcontainer">
+                                        <span><HiClock /></span>
+                                        <p>{result.time}</p>
+                                        <span className='star stars'></span>
+                                        <span className='stars'><FaStar /></span>
+                                        <span className='stars'><FaStar /></span>
+                                        <span className='stars'><FaStar /></span>
+                                        <span className='stars'><FaStar /></span>
+                                    </div>
+                                    <button className="select__button" onClick={() => handleCompanyClick(result.id)}>Avaliable</button>
+                                </div>
                             </div>
                         ))}
                         <p>{showEmptyQuery}</p>
