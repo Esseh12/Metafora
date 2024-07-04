@@ -2,17 +2,24 @@
     padding: 20px;
     background-color: #f5f5f5;
     min-height: 100vh;
+    
 }
-
 .results-page h2 {
     padding-top: 100px;
     text-align: center;
     margin-bottom: 20px;
 }
-
+/* .main__div{
+    display: flex;
+    justify-content: space;
+} */
+/* .bus__picker{
+    width: 20vw;
+} */
 .results-container {
     display: flex;
     flex-direction: column;
+    /* width: 60vw; */
     align-items: center;
 }
 

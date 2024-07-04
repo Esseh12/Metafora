@@ -7,7 +7,7 @@ import { HiClock } from "react-icons/hi";
 import { RiRadioButtonFill } from "react-icons/ri";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GoDotFill } from "react-icons/go";
-
+import Loader from '../HomePage/loading';
 
 import '../../styles/searchResults.css';
 
@@ -43,7 +43,7 @@ const SearchResults = () => {
             setEmptyQuery(err.message)
             // console.log(err);
         })
-    }, [])
+    }, [leavingFrom, goingTo])
 
     const handleCompanyClick = (journey_id) => {
 
@@ -59,22 +59,24 @@ const SearchResults = () => {
             <Navbar />
             <div className="results-page">
                 <h2>Available Routes from {leavingFrom} to {goingTo}</h2>
-                {loading ? (
-                    <p>Searching for buses...</p>
-                ) : (
-                    <div className="results-container">
-                        {query_data.map(result => (
-                            <div key={result.id} className="result-item">
-                                <div className="company__name__container">
-                                    <h3>{result.company_info.name}</h3>
-                                    <p className="price">₦{result.price}</p>
-                                </div>
-                                <div className="company__route__container">
-                                    <div className="company__route__subcontainer"><span className='radio__button'><RiRadioButtonFill /></span><p>{result.parks_info.from.address}</p></div>
-                                    <GoDotFill className="dot"/>
-                                    <GoDotFill className="dot"/>
-                                    <div className="company__route__subcontainer"><span><FaLocationDot /></span><p>{result.parks_info.to.address}</p></div>
-                                </div>
+                <div>
+                    <div></div>
+                    {loading ? (
+                    <Loader />
+                    ) : (
+                        <div className="results-container">
+                            {query_data.map(result => (
+                                <div key={result.id} className="result-item">
+                                    <div className="company__name__container">
+                                        <h3>{result.company_info.name}</h3>
+                                        <p className="price">₦{result.price}</p>
+                                    </div>
+                                    <div className="company__route__container">
+                                        <div className="company__route__subcontainer"><span className='radio__button'><RiRadioButtonFill /></span><p>{result.parks_info.from.address}</p></div>
+                                        <GoDotFill className="dot"/>
+                                        <GoDotFill className="dot"/>
+                                        <div className="company__route__subcontainer"><span><FaLocationDot /></span><p>{result.parks_info.to.address}</p></div>
+                                    </div>
                                 {/* <p><span><FaRoute /></span>Route: {result.name}</p> */}
                                 <div className="company__time__container">
                                     <div className="company__time__subcontainer">
@@ -93,6 +95,7 @@ const SearchResults = () => {
                         <p>{showEmptyQuery}</p>
                     </div>
                 )}
+                </div>
             </div>
             <Footer />
         </>
