@@ -7,7 +7,7 @@ import Loading from './loading'; // Import the Loading component
 const Hero = () => {
     const headings = ['Efficient', 'Reliable', 'Simplified'];
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
-    const [routes] = useState(['Abia', 'Kano', 'Kwara', 'Aba', 'Port Harcourt']);
+    const [routes, setRoutes] = useState(['Abia', 'Kano', 'Kwara', 'Aba', 'Port Harcourt']);
     const [filteredRoutes, setFilteredRoutes] = useState([]);
     const [leavingFrom, setLeavingFrom] = useState('');
     const [goingTo, setGoingTo] = useState('');
@@ -24,6 +24,16 @@ const Hero = () => {
 
         return () => clearInterval(intervalId);
     }, [headings.length]);
+
+    useEffect(()=>{
+        fetch('http://127.0.0.1:5000/parks')
+        // fetch('https://metafora.pythonanywhere.com/companies')
+            .then(response => response.json())
+            .then(data => {
+                setRoutes(data['data']);
+            })
+            .catch(error => console.error('Error fetching states_of_parks:', error));
+    }, [])
 
     const handleInputChange = (e, type) => {
         const value = e.target.value;
