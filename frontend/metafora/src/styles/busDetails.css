@@ -4,13 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    min-height: 85vh;
     background-color: #f3f3f3;
 }
 
 
 .bus-details-container {
-    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    width: 90vw;
     background: #e1eff2;
     padding: 30px;
     padding-top: 0px;
@@ -22,14 +24,17 @@
 .bus-details-content {
     text-align: center;
     display: flex;
-    justify-content: space-between;
-}
-.bus-detail-subcontent{
-    display: flex;
 }
 
 .bus-details {
+    margin-left: 30px;
     margin-top: 20px;
+    text-align: left;
+}
+.bus-details h3{
+    font-size: 1.9rem;
+    color: #303030;
+    margin-bottom: 20px;
 }
 .img__div{
     background-color: #d7ecf3;
@@ -42,17 +47,53 @@
 .img__div img{
     width: 19rem;
 }
+.journey__div{
+    display: flex;
+}
+.journey__div p{
+    margin-left: 5px;
+}
+.journey__div span{
+    margin-top: 2px;
+}
+.second_container{
+    margin-top: 10px;
+}
+.second_sub_container span,
+.first_container span{
+    color: var(--hoverBlue);
+}
+.third_container{
+    margin-top: 20px;
+}
+.journey__sub__div{
+    display: flex;
+}
+.second_sub_container{
+    margin-left: 25px;
+}
+.journey__price__div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+.journey__price__div h3{
+        font-size: 1.7rem;
+        color: #303030;
+        margin-bottom: 20px;
+        padding-left: 30px;
+}
 .select-seat-button {
-    background-color: #007bff;
+    background-color: var(--hoverBlue);
     color: white;
     border: none;
-    height: 10vh;
-    /* padding: 10px 20px; */
+    height: 6vh;
+    padding: 10px 20px;
     border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
 }
 
 .select-seat-button:hover {
-    background-color: #0056b3;
+    background-color: var(--blue);
 }
