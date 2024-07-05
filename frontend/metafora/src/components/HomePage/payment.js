@@ -34,7 +34,7 @@ const Payment = () => {
             } else {
                 setTimeout(() => {
                     setPaymentStatus('confirmed');
-                }, 2000);
+                }, 4000);
             }
         })
         .catch(error => {
