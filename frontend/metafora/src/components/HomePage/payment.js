@@ -19,7 +19,7 @@ const Payment = () => {
 
         const token = localStorage.getItem('accessToken');
 
-        fetch('http://127.0.0.1:5000/tickets/create', {
+        fetch('https://metafora.pythonanywhere.com/tickets/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

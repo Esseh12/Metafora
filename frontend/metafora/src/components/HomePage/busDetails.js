@@ -17,7 +17,7 @@ const BusDetails = () => {
     const [showSeatSelection, setShowSeatSelection] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/journey/${journey_id}`)
+        fetch(`https://metafora.pythonanywhere.com/journey/${journey_id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status !== 200) {

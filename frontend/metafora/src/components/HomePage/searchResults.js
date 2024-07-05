@@ -28,7 +28,7 @@ const SearchResults = () => {
     // ];
 
     useEffect(() => {
-        fetch(`http://localhost:5000/journeys_search?from_state=${leavingFrom}&to_state=${goingTo}`)
+        fetch(`https://metafora.pythonanywhere.com/journeys_search?from_state=${leavingFrom}&to_state=${goingTo}`)
         .then(res=> res.json())
         .then(data=> {
             if (data['status'] !== 200){
