@@ -48,6 +48,7 @@ const SeatSelection = ({ onClose, selectedBus }) => {
         <div className="seat-selection-overlay">
             <div className="seat-selection-popup">
                 <h2>Select Seat(s)</h2>
+                <div></div>
                 <div className="seat-selection-grid">
                     {seats.map(seat => (
                         <div

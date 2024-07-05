@@ -5,6 +5,10 @@ import SeatSelection from './SeatSelection';
 import Navbar from '../HomePage/navbar';
 import Footer from '../HomePage/footer';
 import jetMover from '../../images/jetmover.png';
+import { RiRadioButtonFill } from "react-icons/ri";
+import { MdLocationOn } from "react-icons/md";
+import { GiCarSeat } from "react-icons/gi";
+import { GoClockFill } from "react-icons/go";
 
 const BusDetails = () => {
     const location = useLocation();
@@ -37,24 +41,41 @@ const BusDetails = () => {
         <Navbar />
         <div className="bus-details-page">
             <div className="bus-details-container">
-                <div className="bus-details-content">
+                    <div className="bus-details-content">
                         <div className='img__div'> 
                             <img src={jetMover} alt="jetmover bus" />  
                         </div>
                         <div className="bus-details">
-                            <h3>Jet Mover</h3>
-                            <p>Company: {journeyData.company}</p>
-                            <p>Route: {journeyData.route}</p>
-                            <p>Time: {journeyData.time}</p>
-                            <p>Price: ₦{journeyData.price}</p>
-                            <p>From: {journeyData.from_park}</p>
-                            <p>To: {journeyData.to_park}</p>
+                            <h3>JET&nbsp;(Jet Mover)</h3>
+                            {/* <p>Company: {journeyData.company}</p> */}
+                            {/* <p>Price: ₦{journeyData.price}</p> */}
+                            <div className="journey__div first_container">
+                                <span><RiRadioButtonFill /></span>
+                                <p>Departure: {journeyData.from_park} </p>
+                            </div>
+                            <div className="journey__div second_container">
+                                <span><MdLocationOn /></span>
+                                <p>Arrival: {journeyData.to_park}</p>
+                            </div>
+                            <div className="journey__div third_container">
+                                <div className='journey__sub__div'>
+                                    <span><GiCarSeat /></span>
+                                    <p>9 seats(avaliable)</p>
+                                </div>
+                                <div className='journey__sub__div second_sub_container'>
+                                    <span><GoClockFill /></span>
+                                    <p>{journeyData.time}</p>
+                                </div>
+                            </div>
+                            </div>
                         </div>
-                         <button className="select-seat-button" onClick={handleSelectSeat}>Select Seat</button>
+                        <div className='journey__price__div'>
+                            <h3>₦{journeyData.price}</h3>
+                            <button className="select-seat-button" onClick={handleSelectSeat}>Select Seat</button>
+                        </div>
                     </div>
                 </div>
                 {showSeatSelection && <SeatSelection onClose={() => setShowSeatSelection(false)} selectedBus={journeyData} />}
-            </div>
             <Footer />
         </>
     );

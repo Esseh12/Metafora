@@ -38,7 +38,6 @@ const Signup = () => {
                 localStorage.setItem("accessToken", data['tokens']['access']);
                 localStorage.setItem('loggedIn', '1');
                 // console.log(data['msg']);
-                alert("logged in succcessffullt");
                 console.log(`User is: ${data['userId']}`);
                 localStorage.setItem('userID', data['userId']);
                 // const busDetailss = {...busDetails, userId: data['userId']};
