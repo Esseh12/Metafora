@@ -49,6 +49,7 @@ const Payment = () => {
     };
 
     return (
+        <>
         <div className="payment-page">
             <Navbar />
             {paymentStatus === 'pending' && (
@@ -92,8 +93,9 @@ const Payment = () => {
                     </div>
                 </div>
             )}
-            <Footer />
-        </div>
+            </div>
+             <Footer />
+        </>
     );
 };
 
