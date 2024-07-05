@@ -4,6 +4,7 @@ import '../../styles/payment.css';
 import { PiCreditCardFill } from "react-icons/pi";
 import Navbar from '../HomePage/navbar';
 import Footer from '../HomePage/footer';
+import Loader from '../HomePage/loading';
 
 const Payment = () => {
     const location = useLocation();
@@ -83,7 +84,7 @@ const Payment = () => {
                     </div>
                 </form>
             )}
-            {paymentStatus === 'processing' && <p className="processing-message">Hold on while we confirm your payment...</p>}
+            {paymentStatus === 'processing' && <Loader />}
             {paymentStatus === 'confirmed' && (
                 <div className="payment-overlay">
                     <div className="payment-popup">
