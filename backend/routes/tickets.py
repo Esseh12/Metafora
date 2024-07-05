@@ -66,7 +66,7 @@ def create_ticket():
     if not user:
         return jsonify({"status": 403, "error": "user does not exist"}), 403
         
-    ticket = Ticket(name, passenger_id, journey_id, price, seat_number)
+    ticket = Ticket(user.name, passenger_id, journey_id, price, seat_number)
 
 
     db.session.add(ticket)

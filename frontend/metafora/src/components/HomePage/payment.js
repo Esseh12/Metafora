@@ -1,25 +1,57 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/payment.css';
+
+
+
 
 const Payment = () => {
     const location = useLocation();
     const { selectedSeat, busDetails } = location.state || {};
     const [paymentStatus, setPaymentStatus] = useState('pending');
+    const navigate = useNavigate();
+
 
     const handlePayment = (event) => {
         event.preventDefault();
+        const dt = {...busDetails, user: localStorage.getItem('userID')}
         
         setPaymentStatus('processing');
 
-        // Simulate payment processing
-        setTimeout(() => {
-            setPaymentStatus('confirmed');
-        }, 2000);
+        const token = localStorage.getItem('accessToken');
+        
+        
+
+
+        fetch('https://metafora.pythonanywhere.com/tickets/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name: "Cofounder", passenger_id: dt.user, journey_id: dt.journey_id, price: dt.price, seat_number: selectedSeat })
+
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data['status'] !== 201){
+                throw new Error(`${data['msg']}`);
+            } else {
+                setTimeout(() => {
+                    setPaymentStatus('confirmed');
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            alert(`${error}.`);
+        });
+        
     };
 
     const handleConfirmationClose = () => {
         setPaymentStatus('pending');
+        navigate('/');
+
     };
 
     return (
@@ -31,14 +63,14 @@ const Payment = () => {
                         <p>Selected Seat: {selectedSeat}</p>
                         <p>Bus Company: {busDetails.company}</p>
                         <p>Total Price: ₦{busDetails.price}</p>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="name">Name</label>
                             <input type="text" id="name" name="name" required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
                             <input type="email" id="email" name="email" required />
-                        </div>
+                        </div> */}
                         <div className="form-group">
                             <label htmlFor="cardNumber">Card Number</label>
                             <input type="text" id="cardNumber" name="cardNumber" required />

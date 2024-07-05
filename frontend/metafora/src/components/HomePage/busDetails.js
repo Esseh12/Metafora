@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../styles/busDetails.css';
 import SeatSelection from './SeatSelection';
+import Navbar from '../HomePage/navbar';
+import Footer from '../HomePage/footer';
+import jetMover from '../../images/jetmover.png';
 
 const BusDetails = () => {
     const location = useLocation();
@@ -10,7 +13,7 @@ const BusDetails = () => {
     const [showSeatSelection, setShowSeatSelection] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/journey/${journey_id}`)
+        fetch(`https://metafora.pythonanywhere.com/journey/${journey_id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status !== 200) {
@@ -30,23 +33,30 @@ const BusDetails = () => {
     }
 
     return (
+        <>
+        <Navbar />
         <div className="bus-details-page">
             <div className="bus-details-container">
                 <div className="bus-details-content">
-                    <h2>Bus Details</h2>
-                    <div className="bus-details">
-                        <p>Company: {journeyData.company}</p>
-                        <p>Route: {journeyData.route}</p>
-                        <p>Time: {journeyData.time}</p>
-                        <p>Price: ₦{journeyData.price}</p>
-                        <p>From: {journeyData.from_park}</p>
-                        <p>To: {journeyData.to_park}</p>
-                        <button className="select-seat-button" onClick={handleSelectSeat}>Select Seat</button>
+                        <div className='img__div'> 
+                            <img src={jetMover} alt="jetmover bus" />  
+                        </div>
+                        <div className="bus-details">
+                            <h3>Jet Mover</h3>
+                            <p>Company: {journeyData.company}</p>
+                            <p>Route: {journeyData.route}</p>
+                            <p>Time: {journeyData.time}</p>
+                            <p>Price: ₦{journeyData.price}</p>
+                            <p>From: {journeyData.from_park}</p>
+                            <p>To: {journeyData.to_park}</p>
+                        </div>
+                         <button className="select-seat-button" onClick={handleSelectSeat}>Select Seat</button>
                     </div>
                 </div>
                 {showSeatSelection && <SeatSelection onClose={() => setShowSeatSelection(false)} selectedBus={journeyData} />}
             </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 

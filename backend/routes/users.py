@@ -109,10 +109,13 @@ def login():
     access = create_access_token(identity=identity_obj)
     refresh = create_refresh_token(identity=identity_obj)
     
+    # print(f"User id is: {user.id}")
+    
     return jsonify(
         {
             "status": 200,
             "msg": "Logged in successfully",
+            "userId": user.id,
             "tokens": {
                 "access": access,
                 "refresh": refresh
@@ -142,7 +145,7 @@ def profile_page():
 
 
 @users.get('/logout', strict_slashes=False)
-# @jwt_required()
+@jwt_required()
 def logout():
     verify_jwt_in_request()
     jwt = get_jwt()

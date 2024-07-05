@@ -58,6 +58,7 @@ def get_journey(journey_id):
     journey = db.session.get(Journey, escape(journey_id))
     if journey:
         response = {
+            "journey_id": journey.id,
             "company": journey.company.name,
             "route": journey.name,
             "time": journey.time,

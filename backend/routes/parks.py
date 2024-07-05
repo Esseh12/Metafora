@@ -116,3 +116,22 @@ def delete_park(park_id):
     db.session.commit()
 
     return jsonify({"status": 200, "msg": "Park Sucessfully deleted!"})
+
+
+@parks.get("/parks", strict_slashes=False)
+def get_all_parks_state():
+    """
+    This Method returns a list of all states of available park from database
+    """
+
+
+    parks = db.session.query(Park).all()
+
+    if not parks:
+        return jsonify({"status": 404, "error": "Not parks"}), 404
+    
+    states = [park.state for park in parks]
+    unique_states = list(set(states))
+    # print(states)
+
+    return jsonify({"status": 200, "data": unique_states})

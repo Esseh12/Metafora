@@ -7,7 +7,7 @@ import Loading from './loading'; // Import the Loading component
 const Hero = () => {
     const headings = ['Efficient', 'Reliable', 'Simplified'];
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
-    const [routes] = useState(['Abia', 'Kano', 'Kwara', 'Aba', 'Port Harcourt']);
+    const [routes, setRoutes] = useState(['Abia', 'Kano', 'Kwara', 'Aba', 'Port Harcourt']);
     const [filteredRoutes, setFilteredRoutes] = useState([]);
     const [leavingFrom, setLeavingFrom] = useState('');
     const [goingTo, setGoingTo] = useState('');
@@ -24,6 +24,15 @@ const Hero = () => {
 
         return () => clearInterval(intervalId);
     }, [headings.length]);
+
+    useEffect(()=>{
+        fetch('https://metafora.pythonanywhere.com/parks')
+            .then(response => response.json())
+            .then(data => {
+                setRoutes(data['data']);
+            })
+            .catch(error => console.error('Error fetching states_of_parks:', error));
+    }, [])
 
     const handleInputChange = (e, type) => {
         const value = e.target.value;
@@ -59,7 +68,7 @@ const Hero = () => {
             setLoading(true); // Set loading state to true
             setTimeout(() => {
                 navigate('/search-results', { state: { leavingFrom, goingTo } });
-            }, 2500); // Delay to simulate loading
+            }, 500); // Delay to simulate loading
         } else {
             alert('Please enter all fields.');
         }
