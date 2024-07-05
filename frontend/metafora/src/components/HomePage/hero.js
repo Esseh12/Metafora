@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/hero.css';
+import '../../styles/homepage.css';
 import Loading from './loading'; // Import the Loading component
 
 

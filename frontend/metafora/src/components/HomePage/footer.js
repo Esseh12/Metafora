@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/footer.css';
+import '../../styles/homepage.css';
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareInstagram } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
