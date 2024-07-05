@@ -1,5 +1,5 @@
 
-If youre not already in the backend directory, changeintothe directory uing the command below
+If youre not already in the backend directory, change into the directory using the command below
 
 ```cd backend/```
 
