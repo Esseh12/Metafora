@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/companies.css';
+import '../../styles/homepage.css';
 
 const Companies = () => {
     // for listing banner
@@ -50,7 +50,7 @@ const Companies = () => {
                             <h2>{company.name}</h2>
                             {/* <div><img src={company.pic_url}></img></div> */}
                             <p>{company.description}</p>
-                            <img src={companies.pic_url} alt="company logo" />
+                            {/* <img src={companies.pic_url} alt="company logo" /> */}
                             <blockquote>{company.tagline}</blockquote>
                             <a href={company.unique_code} className="company-link">Visit Company →</a>
                         </div>

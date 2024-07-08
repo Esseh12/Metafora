@@ -2,7 +2,7 @@ import { slide as Menu } from 'react-burger-menu';
 // import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import logo from '../../images/logo.png';
-import '../../styles/navbar.css';
+import '../../styles/homepage.css';
 // import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {

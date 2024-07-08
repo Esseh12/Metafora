@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/testimonies.css';
+import '../../styles/homepage.css';
 import oluchiDavies from "../../images/oluchiDavies.jpeg";
 import sharonIzuchukwu from "../../images/sharonIzuchukwu.webp";
 import adamaGarba from "../../images/adamuGarba.webp";
